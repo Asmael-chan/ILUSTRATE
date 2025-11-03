@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OVA Matemáticas Interactivo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 25%, #24243e 50%, #0f0c29 75%, #302b63 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(0, 255, 150, 0.1) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .math-symbol {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: bold;
+            animation: float 15s infinite;
+            pointer-events: none;
+            text-shadow: 
+                0 0 10px currentColor,
+                0 0 20px currentColor,
+                0 0 30px currentColor;
+        }
+
+        .math-symbol.neon-cyan {
+            color: rgba(0, 255, 255, 0.8);
+        }
+
+        .math-symbol.neon-pink {
+            color: rgba(255, 0, 255, 0.8);
+        }
+
+        .math-symbol.neon-green {
+            color: rgba(0, 255, 150, 0.8);
+        }
+
+        .math-symbol.neon-yellow {
+            color: rgba(255, 255, 0, 0.8);
+        }
+
+        .math-equation {
+            position: absolute;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: bold;
+            animation: floatEquation 20s infinite;
+            pointer-events: none;
+            text-shadow: 
+                0 0 5px currentColor,
+                0 0 10px currentColor;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatEquation {
+            0%, 100% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(50px) rotate(180deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #1e3c72;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .description {
+            color: #333;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(30, 60, 114, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #1e3c72;
+        }
+
+        .buttons-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .game-button {
+            position: relative;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .game-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.5s ease;
+        }
+
+        .game-button:hover::before {
+            left: 100%;
+        }
+
+        .game-button:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .game-button:nth-child(1) {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .game-button:nth-child(2) {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .game-button:nth-child(3) {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .game-button:nth-child(4) {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .button-icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .button-text {
+            font-size: 1.1rem;
+            display: block;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            background: none;
+            border: none;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 5rem;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-title {
+            color: #1e3c72;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .modal-description {
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .modal-features {
+            background: rgba(30, 60, 114, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .modal-features h3 {
+            color: #1e3c72;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .modal-features ul {
+            list-style-position: inside;
+            color: #555;
+        }
+
+        .modal-features li {
+            margin-bottom: 5px;
+        }
+
+        .play-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .buttons-container {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 OVA Matemáticas Interactivo</h1>
+        
+        <div class="description">
+            <p><strong>¡Bienvenido a nuestro Objeto Virtual de Aprendizaje de Matemáticas!</strong></p>
+            <p>Explora y mejora en el mundo de las matemáticas a través de juegos interactivos diseñados para reforzar las habilidades de los estudiantes de grado 6. Cada juego te ayudará a practicar operaciones básicas de manera divertida y educativa. Selecciona un juego y comienza tu aventura matemática.</p>
+        </div>
+
+        <div class="buttons-container">
+            <button class="game-button" onclick="openModal('geométrico')">
+                <span class="button-icon">🔺</span>
+                <span class="button-text">Juego de Vocabulario geométrico</span>
+            </button>
+            
+            <button class="game-button" onclick="openModal('porcentajes')">
+                <span class="button-icon">󠀥󠀥%</span>
+                <span class="button-text">Juego de Porcentajes</span>
+            </button>
+            
+            <button class="game-button" onclick="openModal('fracciones')">
+                <span class="button-icon">½</span>
+                <span class="button-text">Juego de Fraccionarios</span>
+            </button>
+            
+            <button class="game-button" onclick="openModal('division')">
+                <span class="button-icon">➗</span>
+                <span class="button-text">Juego de División</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Modales -->
+    <div id="modal-geométrico" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('geométrico')">&times;</button>
+            <div class="modal-image" style="background: linear-gradient(135deg, #c7d44f 0%, #e09a22 100%);">
+            <img src="Geometricos.png"width="300" height="200">
+            </div>
+            <h2 class="modal-title">Vocabulario geométrico</h2>
+            <p class="modal-description">
+                En este juego pondrás a prueba tus conocimientos sobre las figuras y conceptos de la geometría.
+Deberás identificar, relacionar y usar correctamente términos como vértice, arista, ángulo, radio, diámetro, circunferencia y más.
+¡Demuestra cuánto sabes de geometría mientras te diviertes aprendiendo nuevas palabras del mundo de las formas! 🎯📐
+               
+            </p>
+            <div class="modal-features">
+                <h3>Características:</h3>
+                <ul>
+                    <li>Sencillo y facil de entender</li>
+                    <li>Información basica</li>
+                    <li>Formas geometricas</li>
+                    <li>Interfaz colorida y amigable</li>
+                </ul>
+            </div>
+            <a href="https://wordwall.net/es/resource/100330585" class="play-button">🎮 ¡Jugar Ahora!</a>
+        </div>
+    </div>
+
+    <div id="modal-porcentajes" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('porcentajes')">&times;</button>
+            <div class="modal-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+            <img src="Porcentajes.png"width="300" height="200">
+            </div>
+            <h2 class="modal-title">Porcentajes</h2>
+            <p class="modal-description">
+                Pon a prueba tu habilidad para calcular porcentajes en diferentes situaciones. Resuelve problemas sobre descuentos, aumentos y proporciones que encontrarás en la vida diaria, como compras, rebajas o notas escolares. ¡Demuestra que eres un experto calculando porcentajes! 📊
+            </p>
+            <div class="modal-features">
+                <h3>Características:</h3>
+                <ul>
+                    <li>Permite practicar cómo calcular descuentos y aumentos en situaciones reales.</li>
+                    <li>Ayuda a entender qué representa un porcentaje y cómo usarlo.</li>
+                    <li>Presenta preguntas con opciones para escoger la respuesta correcta.</li>
+                    <li>Es dinámico y divertido, ideal para reforzar lo aprendido en clase.</li>
+                </ul>
+            </div>
+            <a href="https://wordwall.net/es/resource/100329514" class="play-button">🎮 ¡Jugar Ahora!</a>
+        </div>
+    </div>
+
+    <div id="modal-fracciones" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('fracciones')">&times;</button>
+            <div class="modal-image" style="background: linear-gradient(135deg, #33d994 0%, #00f2fe 100%);">
+            <img src="Fracciones.png"width="300" height="200">
+            </div>
+            <h2 class="modal-title">Fraccionarios</h2>
+            <p class="modal-description">
+               En este divertido juego pondrás a prueba tus conocimientos sobre fracciones. Identifica, compara y simplifica fracciones mientras resuelves desafíos relacionados con situaciones cotidianas. ¡Aprende jugando cómo las fracciones forman parte del mundo que te rodea! 🧮
+            </p>
+            <div class="modal-features">
+                <h3>Características:</h3>
+                <ul>
+                    <li>Enseña a identificar y comparar fracciones de manera sencilla.</li>
+                    <li>Incluye ejemplos visuales y cotidianos para comprender mejor las fracciones.</li>
+                    <li>Permite poner en práctica operaciones con fraccionarios.</li>
+                    <li>Motiva al aprendizaje a través del juego y la participación activa.</li>
+                </ul>
+            </div>
+            <a href="https://wordwall.net/es/resource/100136369" class="play-button">🎮 ¡Jugar Ahora!</a>
+        </div>
+    </div>
+
+    <div id="modal-division" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('division')">&times;</button>
+            <div class="modal-image" style="background: linear-gradient(135deg, #dec42d 0%, #38f9d7 100%);">
+            <img src="Divisiones.png"width="300" height="200">
+            </div>
+            <h2 class="modal-title">Divisiones</h2>
+            <p class="modal-description">
+                Demuestra tus habilidades resolviendo ejercicios de división y problemas reales. Cada pregunta te ayudará a entender mejor cómo dividir objetos, números o cantidades en partes iguales. ¡Juega, aprende y conviértete en un verdadero maestro de la división! 🎯
+            </p>
+            <div class="modal-features">
+                <h3>Características:</h3>
+                <ul>
+                    <li>Divisiones exactas y con residuo</li>
+                    <li>Divisiones faciles y rapidas</li>
+                    <li>Diseño sencillo e interactivo</li>
+                    </li>
+                </ul>
+            </div>
+            <a href="https://wordwall.net/es/resource/100716245" class="play-button">🎮 ¡Jugar Ahora!</a>
+        </div>
+    </div>
+
+    <script>
+        // Fondo símbolos matemáticos flotantes con efectos neón
+        const symbols = ['+', '-', '×', '÷', '=', '∑', '∫', 'π', '√', '∞', '≠', '≤', '≥', '∆', '∂', 'α', 'β', 'θ', '°', '%'];
+        const equations = ['2+2=4', '5×3=15', '10÷2=5', 'π≈3.14', 'a²+b²=c²', 'E=mc²', 'x+y=z', '√16=4'];
+        const neonClasses = ['neon-cyan', 'neon-pink', 'neon-green', 'neon-yellow'];
+        
+        function createMathSymbol() {
+            const symbol = document.createElement('div');
+            symbol.className = 'math-symbol ' + neonClasses[Math.floor(Math.random() * neonClasses.length)];
+            symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            symbol.style.left = Math.random() * 100 + '%';
+            symbol.style.fontSize = (Math.random() * 2 + 1.5) + 'rem';
+            symbol.style.animationDuration = (Math.random() * 8 + 8) + 's';
+            symbol.style.animationDelay = Math.random() * 3 + 's';
+            
+            document.body.appendChild(symbol);
+            
+            setTimeout(() => {
+                symbol.remove();
+            }, 20000);
+        }
+
+        function createMathEquation() {
+            const equation = document.createElement('div');
+            equation.className = 'math-equation';
+            equation.textContent = equations[Math.floor(Math.random() * equations.length)];
+            equation.style.left = Math.random() * 100 + '%';
+            equation.style.fontSize = (Math.random() * 1 + 1.2) + 'rem';
+            equation.style.animationDuration = (Math.random() * 10 + 15) + 's';
+            equation.style.animationDelay = Math.random() * 5 + 's';
+            
+            const randomColor = neonClasses[Math.floor(Math.random() * neonClasses.length)];
+            if (randomColor === 'neon-cyan') equation.style.color = 'rgba(0, 255, 255, 0.6)';
+            if (randomColor === 'neon-pink') equation.style.color = 'rgba(255, 0, 255, 0.6)';
+            if (randomColor === 'neon-green') equation.style.color = 'rgba(0, 255, 150, 0.6)';
+            if (randomColor === 'neon-yellow') equation.style.color = 'rgba(255, 255, 0, 0.6)';
+            
+            document.body.appendChild(equation);
+            
+            setTimeout(() => {
+                equation.remove();
+            }, 25000);
+        }
+
+        // Crear símbolos y ecuaciones continuamente
+        setInterval(createMathSymbol, 400);
+        setInterval(createMathEquation, 1200);
+        
+        // Crear elementos iniciales
+        for (let i = 0; i < 25; i++) {
+            setTimeout(createMathSymbol, i * 150);
+        }
+        
+        for (let i = 0; i < 8; i++) {
+            setTimeout(createMathEquation, i * 500);
+        }
+
+        // Funciones para los modales
+        function openModal(gameType) {
+            const modal = document.getElementById('modal-' + gameType);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(gameType) {
+            const modal = document.getElementById('modal-' + gameType);
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Cerrar modal al hacer clic fuera del contenido
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+    </script>
+</body>
+</html>

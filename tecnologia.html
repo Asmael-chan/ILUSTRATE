@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>TECNOLOGÍA - Ilustrarte</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #263238, #37474f);
+      color: #90a4ae;
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 40px;
+      font-size: 3em;
+      text-shadow: 0 0 10px #90a4ae, 0 0 25px #90a4ae;
+    }
+
+    .contenedor {
+      max-width: 1000px;
+      margin: 40px auto;
+      background: rgba(0, 0, 0, 0.4);
+      border: 2px solid #90a4ae;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px #90a4ae;
+    }
+
+    .autor {
+      font-weight: bold;
+      margin-bottom: 15px;
+      font-size: 1.1em;
+      color: #ffffff;
+    }
+
+    img.principal {
+      width: 90%;
+      max-width: 600px;
+      border-radius: 10px;
+      margin: 20px auto;
+      box-shadow: 0 0 15px #90a4ae;
+    }
+
+    p.descripcion {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #dddddd;
+      padding: 0 20px;
+    }
+
+    .video {
+      margin-top: 30px;
+    }
+
+    iframe {
+      width: 90%;
+      max-width: 640px;
+      height: 360px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 0 20px #90a4ae;
+    }
+
+    a.volver {
+      display: inline-block;
+      margin-top: 30px;
+      color: #90a4ae;
+      border: 1px solid #90a4ae;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+
+    a.volver:hover {
+      background: #90a4ae;
+      color: #000;
+    }
+              .pdf-controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .pdf-btn {
+      padding: 12px 25px;
+      background: linear-gradient(135deg, #46413a 0%, #5c554d 100%);
+      color: #fff3e0;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pdf-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(255, 243, 224, 0.6);
+    }
+            .pdf-section {
+      margin-top: 40px;
+      padding: 30px;
+      background: rgba(255, 243, 224, 0.05);
+      border: 2px solid #fff3e0;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 243, 224, 0.3);
+    }
+
+    .pdf-section h2 {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #fff3e0;
+    }
+
+    .pdf-container {
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid #fff3e0;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .magazine-pages {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding: 15px;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+    }
+
+    .magazine-page {
+      flex: 0 0 calc(50% - 10px);
+      aspect-ratio: 8.5 / 11;
+      background: white;
+      border: 3px solid #fff3e0;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      scroll-snap-align: start;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .magazine-page:hover {
+      transform: scale(1.02);
+      box-shadow: 0 15px 40px rgba(255, 243, 224, 0.4);
+    }
+
+    .magazine-page img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .page-number {
+      position: absolute;
+      bottom: 10px;
+      right: 15px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff3e0;
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      z-index: 10;
+    }
+
+    /* Modal fullscreen para revista */
+    .magazine-modal {
+      display: none;
+      position: fixed;
+      z-index: 10002;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(4, 2, 1, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%);
+    }
+
+    .magazine-modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .magazine-modal-content {
+      position: relative;
+      width: 90%;
+      max-width: 900px;
+      height: 90vh;
+      background: white;
+      border: 4px solid #fff3e0;
+      border-radius: 15px;
+      box-shadow: 0 0 80px rgba(255, 243, 224, 0.8);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .magazine-modal-page {
+      flex: 1;
+      overflow: auto;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      background: white;
+      padding: 20px;
+      perspective: 1500px;
+    }
+
+    .magazine-modal-page img {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+      transform-origin: left center;
+      transition: transform 0.8s ease;
+    }
+
+    /* EFECTO DE PASAR PÁGINA */
+    .page-turn {
+      animation: flipPage 0.8s ease forwards;
+    }
+
+    @keyframes flipPage {
+      0% { transform: rotateY(0deg); opacity: 1; }
+      50% { transform: rotateY(-90deg); opacity: 0.3; }
+      100% { transform: rotateY(0deg); opacity: 1; }
+    }
+
+    .magazine-modal-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 30px;
+      background: linear-gradient(135deg, #5e574e 0%, #665a4a 100%);
+      border-top: 2px solid #fff3e0;
+    }
+
+    .modal-page-info {
+      color: #fff3e0;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    .modal-page-controls {
+      display: flex;
+      gap: 15px;
+    }
+
+    .modal-btn {
+      padding: 12px 25px;
+      background: rgba(255, 243, 224, 0.2);
+      color: #fff3e0;
+      border: 2px solid #fff3e0;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .modal-btn:hover:not(:disabled) {
+      background: rgba(255, 243, 224, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .modal-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .close-magazine-modal {
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #473f35;
+      cursor: pointer;
+      z-index: 10003;
+      background: rgba(255, 243, 224, 0.9);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(255, 243, 224, 0.5);
+    }
+
+    .close-magazine-modal:hover {
+      background: #fff3e0;
+      color: #040201;
+      transform: rotate(90deg);
+    }
+
+    .pdf-controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .pdf-btn {
+      padding: 12px 25px;
+      background: linear-gradient(135deg, #94836d 0%, #3b342a 100%);
+      color: #fff3e0;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pdf-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(255, 243, 224, 0.6);
+    }
+
+
+  </style>
+</head>
+<body>
+  <h1>TECNOLOGÍA</h1>
+
+  <div class="contenedor">
+    <p class="autor">Autor: Juan Camilo Herrera Castro</p>
+
+    <img src="network-6869734_1280.webp" alt="Tecnología" class="principal">
+
+    <p class="descripcion">
+      Exploramos el fascinante mundo de la tecnología aplicada a la educación. En nuestra institucion y nuestros estudiantes desarrollan competencias digitales que los preparan para el futuro tecnológico.
+    </p>
+
+    
+             <div class="pdf-section">
+      <h2>📖 Documentación Completa</h2>
+      <div class="pdf-container">
+        <p style="margin-bottom: 20px; color: #dddddd;">Haz clic en cualquier página para verla en detalle</p>
+        <div class="magazine-pages" id="magazinePages">
+          <div class="magazine-page" onclick="openMagazineModal(0)">
+            <img src="1T.jpg" alt="Página 1">
+            <div class="page-number">1</div>
+          </div>
+          <div class="magazine-page" onclick="openMagazineModal(1)">
+            <img src="2T.jpg" alt="Página 2">
+            <div class="page-number">2</div>
+          </div>
+          <div class="magazine-page" onclick="openMagazineModal(2)">
+            <img src="3T.jpg" alt="Página 3">
+            <div class="page-number">3</div>
+          </div>
+        </div>
+      </div>
+    </div>
+ <div class="pdf-controls">
+        <a href="TECNOLOGIA ALBERTO LLERAS CAMARGO.pdf.pdf" class="pdf-btn" target="_blank" rel="noopener noreferrer">📄 Ver PDF Completo</a>
+      </div>
+
+    <audio id="click-sound" src="xbox-scroll-left-right.mp3" preload="auto"></audio>
+    <a class="volver" href="index.html">← Volver a la página principal</a>
+  </div>
+
+  <div id="magazineModal" class="magazine-modal">
+    <div class="magazine-modal-content">
+      <span class="close-magazine-modal" onclick="closeMagazineModal()">&times;</span>
+      <div class="magazine-modal-page">
+        <img id="modalPageImage" src="" alt="Página revista">
+      </div>
+      <div class="magazine-modal-footer">
+        <div class="modal-page-info">
+          Página <span id="modalPageNumber">1</span> de <span id="modalTotalPages">3</span>
+        </div>
+        <div class="modal-page-controls">
+          <button class="modal-btn" id="prevBtn" onclick="previousMagazinePage()">⬅ Anterior</button>
+          <button class="modal-btn" id="nextBtn" onclick="nextMagazinePage()">Siguiente ➡</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+ 
+<script>
+  let currentMagazinePage = 0;
+  const magazinePages = document.querySelectorAll('.magazine-page');
+  const totalPages = magazinePages.length;
+  const sonidoClick = document.getElementById('click-sound');
+  const botonVolver = document.querySelector('.volver');
+
+  function openMagazineModal(pageIndex) {
+    currentMagazinePage = pageIndex;
+    const modal = document.getElementById('magazineModal');
+    const pageImage = magazinePages[pageIndex].querySelector('img').src;
+
+    document.getElementById('modalPageImage').src = pageImage;
+    document.getElementById('modalPageNumber').textContent = pageIndex + 1;
+    document.getElementById('modalTotalPages').textContent = totalPages;
+
+    modal.classList.add('active');
+    updateMagazineButtons();
+  }
+
+  function closeMagazineModal() {
+    document.getElementById('magazineModal').classList.remove('active');
+  }
+
+  function nextMagazinePage() {
+    if (currentMagazinePage < totalPages - 1) {
+      currentMagazinePage++;
+      flipPageEffect();
+      updateMagazinePage();
+      reproducirSonido();
+    }
+  }
+
+  function previousMagazinePage() {
+    if (currentMagazinePage > 0) {
+      currentMagazinePage--;
+      flipPageEffect();
+      updateMagazinePage();
+      reproducirSonido();
+    }
+  }
+
+  function flipPageEffect() {
+    const img = document.getElementById('modalPageImage');
+    img.classList.remove('page-turn');
+    void img.offsetWidth; // reinicia animación
+    img.classList.add('page-turn');
+  }
+
+  function updateMagazinePage() {
+    const pageImage = magazinePages[currentMagazinePage].querySelector('img').src;
+    document.getElementById('modalPageImage').src = pageImage;
+    document.getElementById('modalPageNumber').textContent = currentMagazinePage + 1;
+    updateMagazineButtons();
+  }
+
+  function updateMagazineButtons() {
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    prevBtn.disabled = currentMagazinePage <= 0;
+    nextBtn.disabled = currentMagazinePage >= totalPages - 1;
+  }
+
+  // Cierra modal al hacer clic fuera del contenido
+  document.getElementById('magazineModal').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeMagazineModal();
+  });
+
+  // Sonido de clic reutilizable
+  function reproducirSonido() {
+    sonidoClick.currentTime = 0;
+    sonidoClick.play();
+  }
+
+  // Reproduce sonido al hacer clic en "Volver"
+  botonVolver.addEventListener('click', (event) => {
+    event.preventDefault();
+    reproducirSonido();
+    sonidoClick.onended = () => {
+      window.location.href = botonVolver.href;
+    };
+  });
+</script>
+</body>
+</html>

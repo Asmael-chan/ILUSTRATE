@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Aprende Español - Colegio ALLC</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="header-logo">
+ <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgO6cxRRalzllWfIJm-OP5FbRkFxC6Hlq2lyybnpaAxmnfsfdDMGyC5JZJOPAHGz0PIjForsV5JbzqYSrLNDZMuVWqSG-M8yYEjgLIPN2FWYuF3rQppx0YkFUZ5QDoGvMrsMwfGmc2vM9Hg/s1600/Escudo+ALLC+HD+PNG.png" 
+     alt="Escudo ALLC" 
+     style="width:150px; height:auto; border-radius:0;">
+  <div class="header-text">
+    <h1>Colegio Alberto Lleras Camargo</h1>
+    <p>Proyecto: Aprende Español de forma divertida</p>
+  </div>
+</header>
+  <nav>
+    <button onclick="showPage('presentacion')">Presentación</button>
+    <button onclick="showPage('lecciones')">Lecciones y Juegos</button>
+  </nav>
+
+  <main>
+    <section id="presentacion" class="page active-page">
+  <div class="portada">
+    <div class="portada-texto">
+      <h2>¡Bienvenidos a Aprende Español!</h2>
+      <p id="texto-presentacion">
+        Nuestro objetivo de esta página web es ayudar a los estudiantes de segundo de primaria a aprender español de manera interactiva y divertida ya que es un idioma fundamental para su desarrollo académico y personal. Aquí encontrarán lecciones sencillas sobre vocales, sílabas y lectura, acompañadas de juegos educativos que refuerzan lo aprendido. ¡Esperamos que disfruten aprendiendo con nosotros! ya que nuestro OVA es para que los niños se diviertan mientras aprenden y practique sus habilidades en el español de forma ludica y entretenida.
+      </p>
+      <button class="audio-btn" onclick="leerTexto(document.getElementById('texto-presentacion').textContent)">
+        🔊 Escuchar presentación
+      </button>
+    </div>
+    <div class="portada-img">
+      <img src="alpaca.png" alt="Nuestra mascota: la alpaca">
+      <p>¡Descarga nuestro juego y aprende jugando!</p>
+<a href="https://www.mediafire.com/file/qdhnsplxd16al2n/Aprende+con+la+Alpaca+(1).apk/file" target="_blank" class="download-btn">
+  ⬇ Descargar Juego
+</a>
+    </div>
+  </div>
+</section>
+    <section id="lecciones" class="page">
+      <section class="card lessons">
+        <h2>Lecciones 
+          <button class="audio-btn" onclick="leerTexto('Estas son las lecciones para aprender español: vocales, sílabas y lectura.')">🔊</button>
+        </h2>
+        <div class="lesson">
+          <h3>Lección 1 — Vocales 
+            <button class="audio-btn" onclick="leerTexto('Lección 1. Aprendemos las 5 vocales: A, E, I, O, U. Son la base para formar palabras.')">🔊</button>
+          </h3>
+          <p>Aprendemos las 5 vocales: A, E, I, O, U. Son la base para formar palabras.</p>
+        </div>
+        <div class="lesson">
+          <h3>Lección 2 — Sílabas 
+            <button class="audio-btn" onclick="leerTexto('Lección 2. Separar palabras en sílabas ayuda a leer mejor. Ejemplo: So-pa, Ca-sa.')">🔊</button>
+          </h3>
+          <p>Separar palabras en sílabas ayuda a leer mejor. Ejemplo: "So-pa", "Ca-sa".</p>
+        </div>
+        <div class="lesson">
+          <h3>Lección 3 — Lectura 
+            <button class="audio-btn" onclick="leerTexto('Lección 3. Lecturas cortas con preguntas para practicar comprensión lectora.')">🔊</button>
+          </h3>
+          <p>Lecturas cortas con preguntas para practicar comprensión lectora.</p>
+        </div>
+      </section>
+      <section class="card">
+        <h2>Juego 1: Aprende las Vocales 
+          <button class="audio-btn" onclick="leerTexto('Juego uno. Aprende las vocales. Haz clic en una vocal y selecciona la palabra correcta.')">🔊</button>
+        </h2>
+        <p>Haz clic en una vocal y selecciona la palabra correcta.</p>
+        <div class="vowels">
+          <div class="vowel" data-v="A" aria-label="Vocal A">A</div>
+          <div class="vowel" data-v="E" aria-label="Vocal E">E</div>
+          <div class="vowel" data-v="I" aria-label="Vocal I">I</div>
+          <div class="vowel" data-v="O" aria-label="Vocal O">O</div>
+          <div class="vowel" data-v="U" aria-label="Vocal U">U</div>
+        </div>
+        <div class="options" id="options-vocales"></div>
+        <div class="message" id="msg-vocales"></div>
+      </section>
+      <section class="card">
+        <h2>Juego 2: Separa en Sílabas 
+          <button class="audio-btn" onclick="leerTexto('Juego dos. Separa en sílabas. Elige la opción correcta para separar la palabra en sílabas.')">🔊</button>
+        </h2>
+        <p>Elige la opción correcta para separar la palabra en sílabas.</p>
+        <div class="syllables">
+          <div class="syll-word" data-word="Casa" aria-label="Palabra Casa">Casa</div>
+          <div class="syll-word" data-word="Sol" aria-label="Palabra Sol">Sol</div>
+          <div class="syll-word" data-word="Comida" aria-label="Palabra Comida">Comida</div>
+        </div>
+        <div class="options" id="options-silabas"></div>
+        <div class="message" id="msg-silabas"></div>
+      </section>
+      <section class="card">
+        <h2>Juego 3: Comprensión de Lectura 
+          <button class="audio-btn" onclick="leerTexto('Juego tres. Comprensión de lectura. Escucha o lee el texto y responde las preguntas.')">🔊</button>
+        </h2>
+        <p><strong>Texto:</strong> <span id="texto-lectura">"El perro corre en el parque. Juega con una pelota y está feliz."</span></p>
+        <p><em>Responde las preguntas:</em></p>
+        <button onclick="leerTexto(document.getElementById('texto-lectura').textContent)" style="margin-bottom:12px;padding:8px 16px;background:#6a1b9a;color:white;border:none;border-radius:8px;cursor:pointer;">🔊 Escuchar texto</button>
+        <div class="options" id="options-lectura"></div>
+        <div class="message" id="msg-lectura"></div>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <small>Proyecto educativo para <strong>Colegio Alberto Lleras Camargo</strong>. </small>
+  </footer>
+
+  <script>
+    function showPage(pageId){
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+      document.getElementById(pageId).classList.add('active-page');
+    }
+    function leerTexto(texto) {
+      const speech = new SpeechSynthesisUtterance(texto);
+      speech.lang = 'es-ES';
+      window.speechSynthesis.speak(speech);
+    }
+    const dataVocales = {
+      A: {word:'Abeja', options:['Abeja','Perro','Sol']},
+      E: {word:'Elefante', options:['Casa','Elefante','Luna']},
+      I: {word:'Isla', options:['Isla','Tigre','Mesa']},
+      O: {word:'Oso', options:['Flor','Oso','Gato']},
+      U: {word:'Uva', options:['Zapato','Uva','Rana']}
+    };
+    const vowels = document.querySelectorAll('.vowel');
+    const optionsV = document.getElementById('options-vocales');
+    const msgV = document.getElementById('msg-vocales');
+
+    function playV(v){
+      const item = dataVocales[v];
+      optionsV.innerHTML = '';
+      msgV.textContent = '';
+      vowels.forEach(n=>n.classList.toggle('active', n.dataset.v===v));
+      item.options.forEach(opt=>{
+        const btn = document.createElement('div');
+        btn.textContent = opt;
+        btn.className = 'option';
+        btn.setAttribute('aria-label', `Opción ${opt}`);
+        btn.addEventListener('click', ()=>{
+          leerTexto(opt);
+          if(opt === item.word){
+            msgV.textContent = '¡Muy bien!';
+            msgV.className = 'message correct';
+            leerTexto('¡Muy bien!');
+          } else {
+            msgV.textContent = 'Intenta de nuevo';
+            msgV.className = 'message wrong';
+            leerTexto('Intenta de nuevo');
+          }
+        });
+        optionsV.appendChild(btn);
+      });
+    }
+    vowels.forEach(v=>v.addEventListener('click', ()=>playV(v.dataset.v)));
+    const dataSilabas = {
+      Casa: {correct:'Ca-sa', options:['Ca-sa','Cas-a','C-asa']},
+      Sol: {correct:'Sol', options:['So-l','Sol','S-ol']},
+      Comida: {correct:'Co-mi-da', options:['Comi-da','Co-mi-da','Co-mid-a']}
+    };
+    const wordsS = document.querySelectorAll('.syll-word');
+    const optionsS = document.getElementById('options-silabas');
+    const msgS = document.getElementById('msg-silabas');
+
+    function playS(w){
+      const item = dataSilabas[w];
+      optionsS.innerHTML = '';
+      msgS.textContent = '';
+      wordsS.forEach(n=>n.classList.toggle('active', n.dataset.word===w));
+      item.options.forEach(opt=>{
+        const btn = document.createElement('div');
+        btn.textContent = opt;
+        btn.className = 'option';
+        btn.setAttribute('aria-label', `Opción ${opt}`);
+        btn.addEventListener('click', ()=>{
+          leerTexto(opt);
+          if(opt === item.correct){
+            msgS.textContent = '¡Correcto!';
+            msgS.className = 'message correct';
+            leerTexto('¡Correcto!');
+          } else {
+            msgS.textContent = 'No es la correcta';
+            msgS.className = 'message wrong';
+            leerTexto('No es la correcta');
+          }
+        });
+        optionsS.appendChild(btn);
+      });
+    }
+    wordsS.forEach(w=>w.addEventListener('click', ()=>playS(w.dataset.word)));
+    const dataLectura = [
+      {q:'¿Dónde corre el perro?', options:['En la casa','En el parque','En la calle'], correct:'En el parque'},
+      {q:'¿Con qué juega el perro?', options:['Con una pelota','Con un gato','Con un palo'], correct:'Con una pelota'},
+      {q:'¿Cómo está el perro?', options:['Triste','Feliz','Enojado'], correct:'Feliz'}
+    ];
+    const optionsL = document.getElementById('options-lectura');
+    const msgL = document.getElementById('msg-lectura');
+
+    function loadLectura(){
+      optionsL.innerHTML = '';
+      msgL.textContent = '';
+      dataLectura.forEach(item=>{
+        const p = document.createElement('p');
+        p.textContent = item.q;
+        const btnAudio = document.createElement('button');
+        btnAudio.textContent = '🔊';
+        btnAudio.className = 'audio-btn';
+        btnAudio.onclick = ()=>leerTexto(item.q);
+        p.appendChild(btnAudio);
+        optionsL.appendChild(p);
+
+        item.options.forEach(opt=>{
+          const btn = document.createElement('div');
+          btn.textContent = opt;
+          btn.className = 'option';
+          btn.setAttribute('aria-label', `Opción ${opt}`);
+          btn.addEventListener('click',()=> {
+            leerTexto(opt);
+            if(opt === item.correct){
+              msgL.textContent = '¡Bien hecho!';
+              msgL.className = 'message correct';
+              leerTexto('¡Bien hecho!');
+            } else {
+              msgL.textContent = 'Revisa el texto de nuevo';
+              msgL.className = 'message wrong';
+              leerTexto('Revisa el texto de nuevo');
+            }
+          });
+          optionsL.appendChild(btn);
+        });
+      });
+    }
+    loadLectura();
+  </script>
+</body>
+</html>
+<script>
+  setInterval(() => {
+    const alpaca = document.createElement('img');
+    alpaca.src = 'alpaca.png';
+    alpaca.className = 'heart';
+    alpaca.style.left = Math.random() * 100 + 'vw';
+    alpaca.style.width = Math.random() * 40 + 30 + 'px';
+    alpaca.style.animationDuration = (Math.random() * 3 + 5) + 's';
+    alpaca.style.filter = 'drop-shadow(0 0 6px rgba(255, 182, 193, 0.6))';
+    document.body.appendChild(alpaca);
+    setTimeout(() => alpaca.remove(), 7000);
+  }, 900);
+</script>

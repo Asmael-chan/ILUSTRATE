@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>AUTORES - Ilustrarte</title>
+    <link rel="icon" href="Escudo ALLC HD PNG.png" type="image/x-icon">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0a0a23, #1a1a3a);
+      color: #00d4aa;
+      text-align: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      margin-top: 40px;
+      font-size: 3.5em;
+      text-shadow: 0 0 15px #00d4aa, 0 0 30px #00d4aa;
+      margin-bottom: 50px;
+    }
+
+    .contenedor-principal {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .autor-card {
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid #00d4aa;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0, 212, 170, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      max-width: 350px;
+      margin: 20px;
+    }
+
+    .autor-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 35px rgba(0, 212, 170, 0.5);
+    }
+
+    .foto-autor {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      border: 3px solid #00d4aa;
+      box-shadow: 0 0 20px rgba(0, 212, 170, 0.4);
+      object-fit: cover;
+      display: block;
+    }
+
+    .cargo {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #00d4aa;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px #00d4aa;
+    }
+
+    .nombre {
+      font-size: 1.1em;
+      color: #ffffff;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    .descripcion {
+      font-size: 0.95em;
+      color: #cccccc;
+      line-height: 1.6;
+    }
+
+    .jefe {
+      border-color: #ffd700;
+      color: #ffd700;
+    }
+
+    .jefe .cargo {
+      color: #ffd700;
+      text-shadow: 0 0 10px #ffd700;
+    }
+
+    .jefe .foto-autor {
+      border-color: #ffd700;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    }
+
+    .jefe:hover {
+      box-shadow: 0 0 35px rgba(255, 215, 0, 0.5);
+    }
+
+    /* Bloques de pareja */
+    .autor-pareja {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      max-width: 600px;
+      margin: 0 auto 50px;
+    }
+
+    .fotos-pareja {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .fotos-pareja .foto-autor {
+      width: 130px;
+      height: 130px;
+    }
+
+    /* Contenedor de cooperadores */
+    .cooperadores {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin: 40px 0;
+    }
+
+    /* Diseñador general */
+    .diseñador-centro {
+      display: flex;
+      justify-content: center;
+      margin: 50px 0;
+    }
+
+    a.volver {
+      display: inline-block;
+      margin-top: 40px;
+      color: #00d4aa;
+      border: 2px solid #00d4aa;
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1.1em;
+      transition: all 0.3s ease;
+    }
+
+    a.volver:hover {
+      background: #00d4aa;
+      color: #000;
+      box-shadow: 0 0 20px #00d4aa;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5em;
+      }
+      
+      .foto-autor {
+        width: 100px;
+        height: 100px;
+      }
+
+      .fotos-pareja .foto-autor {
+        width: 100px;
+        height: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>AUTORES</h1>
+
+  <div class="contenedor-principal">
+
+    <!-- Bloque de pareja -->
+    <div class="autor-card jefe autor-pareja">
+      <div class="fotos-pareja">
+        <img src="57ec4d95-6d5b-4630-a4a6-a1abc7df2a13.jpeg" alt="Jefe Programador" class="foto-autor">
+        <img src="8621fbca-07d2-40b8-936d-49b3dc64faed.jpeg" alt="Jefa de Diseño" class="foto-autor">
+      </div>
+      <div class="cargo">JEFE PROGRAMADOR & JEFA DE DISEÑO Y PORTADAS</div>
+      <div class="nombre">Juan Camilo Herrera & Ashley Tatiana Tapias</div>
+      <div class="descripcion">
+        Él es líder del equipo de desarrollo Encargado de toda la revista digital , diseñador principal y programador clave, especialista en arquitectura web y encargado de la pagina.  
+        Ella es directora creativa encargada de hacer las portadas de cada articulo de la revista digital  y diseño visual.  
+      </div>
+    </div>
+
+    <!-- Cooperadores centrados -->
+    <div class="cooperadores">
+      <div class="autor-card">
+        <img src="4f189ebf-c544-4d50-9af5-4bc1439b2187.jpeg" alt="Cooperador 1" class="foto-autor">
+        <div class="cargo">JEFE DE ARTICULOS</div>
+        <div class="nombre">Santiago Cuellar Diaz </div>
+        <div class="descripcion">
+             Especialista en contenido digital y gestión de medios audiovisuales. Responsable de la integración de articulos pdf del proyecto , lider encargado de cada articulo .
+        </div>
+      </div>
+
+      <div class="autor-card">
+        <img src="24f7cbb8-e139-4ee1-a38c-5e321abdc65a.jpeg" alt="Cooperador 2" class="foto-autor">
+        <div class="cargo">COOPERADOR DE PÁGINA</div>
+        <div class="nombre">Kevin Alexander Moreno Benito</div>
+        <div class="descripcion">
+          Especialista en contenido digital y gestión de medios audiovisuales. Responsable de la integración de articulos pdf del proyecto.
+        </div>
+      </div>
+    </div>
+
+    <!-- Diseñador general centrado -->
+    <div class="diseñador-centro">
+      <div class="autor-card">
+        <img src="4ad97834-feac-4225-b179-b0c42ac7dc94.jpeg" alt="Diseñador Básico" class="foto-autor">
+        <div class="cargo">COOPERADOR BASICO</div>
+        <div class="nombre">Melo Cespedes Deivid Sebastian</div>
+        <div class="descripcion">
+           Responsable de la integración de articulos pdf del proyecto , si hizo los pdf pero al jefe de programacion le toco arreglarlo 
+        </div>
+      </div>
+    </div>
+
+    <a class="volver" href="index.html">← Volver a la página principal</a>
+  </div>
+</body>
+</html>

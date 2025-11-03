@@ -1,0 +1,332 @@
+:root {
+    --color-background: #b3e0ff;
+    --color-primary: #1a4e7e;
+    --color-text: #333333;
+    --color-footer-text: #1a4e7e;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    color: var(--color-footer-text);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    width: 100%;
+    padding: 20px 50px 0;
+    box-sizing: border-box;
+}
+
+.header-content {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+}
+
+.user-nav {
+    margin-right: 20px;
+}
+
+.user-nav a {
+    color: var(--color-text);
+}
+
+.main-nav ul {
+    display: flex;
+    gap: 30px;
+}
+
+.main-nav .current a {
+    font-weight: bold;
+}
+
+.main-nav .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.main-nav .dropdown > a {
+    cursor: pointer;
+}
+
+.main-nav .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0; 
+    left: auto; 
+    z-index: 1000;
+    background-color: white; 
+    min-width: 280px; 
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+    padding: 5px 0;
+    border-radius: 8px; 
+}
+
+.main-nav .dropdown-content li {
+    padding: 0;
+}
+
+.main-nav .dropdown-content a {
+    color: var(--color-primary);
+    padding: 10px 10px; 
+    text-decoration: none;
+    display: block;
+    white-space: nowrap;
+    font-weight: normal;
+}
+
+.main-nav .dropdown-content a:hover {
+    background-color: #f0f0f0; 
+    text-decoration: none;
+}
+
+.main-nav .dropdown:hover .dropdown-content {
+    display: block;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+    min-height: 85vh; 
+}
+
+.hero-section {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.title-box {
+    background-color: var(--color-primary);
+    padding: 10px 40px;
+    border-radius: 50px;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.title-box h1 {
+    color: white;
+    font-size: 3em;
+    margin: 0;
+    font-weight: normal;
+}
+
+.tagline {
+    font-size: 1.2em;
+    color: var(--color-text);
+}
+
+.filosofia-main { 
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+    min-height: 85vh; 
+}
+
+.mission-container {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    height: 450px;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    display: flex; 
+    justify-content: flex-end; 
+}
+
+.image-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('holocausto-del-palacio-de-justicia.jpg'); 
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+    border-radius: 8px;
+}
+
+.mission-box {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    max-width: 450px;
+    z-index: 2;
+    margin-right: 20px;
+    margin-left: auto; 
+    text-align: left;
+    height: auto; 
+    max-height: 90%;
+    overflow-y: auto; 
+}
+
+.mission-box h2 {
+    color: var(--color-primary);
+    font-size: 1.8em;
+    margin-top: 0;
+}
+
+.mission-box h4 {
+    color: var(--color-primary);
+    font-size: 1.1em;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.mission-box p {
+    line-height: 1.6;
+    font-size: 1.05em;
+    margin-bottom: 10px;
+}
+
+.mission-box ul {
+    list-style: disc;
+    margin-left: 20px;
+}
+
+.mission-box hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}
+
+.romano-bg {
+    background-image: url('que-ver-en-roma-basilica-san-pedro.jpg'); 
+    background-position: center center;
+}
+
+.mission-container:has(.romano-bg) {
+    justify-content: flex-start; 
+}
+
+.mission-container:has(.romano-bg) .mission-box {
+    background-color: white; 
+    margin-left: 50%;
+    margin-right: 0;
+    width: 50%;
+    max-width: 50%;
+}
+
+.colombiano-bg {
+    background-image: url('`Los-treinta-anos-de-la-constitucion-politica_0.png'); 
+    background-position: center center;
+}
+
+.participacion-bg {
+    background-image: url('1696266751180.jpg');
+    background-position: center center;
+}
+
+.video-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 40px auto; 
+    text-align: center;
+    padding: 0 20px;
+}
+
+.video-section h3 {
+    color: var(--color-primary);
+    font-size: 1.5em;
+    margin-bottom: 25px;
+}
+
+.video-container {
+    display: inline-block;
+    border: 5px solid white; 
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden; 
+}
+
+footer {
+    width: 100%;
+    padding: 40px 50px;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: var(--color-background);
+    color: var(--color-footer-text);
+}
+
+.footer-columns {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.footer-col {
+    width: 20%;
+    padding-right: 20px;
+}
+
+.footer-col h4 {
+    font-size: 1.1em;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: var(--color-footer-text);
+}
+
+.footer-col p, .footer-col address {
+    font-size: 0.9em;
+    margin: 5px 0;
+    color: var(--color-footer-text);
+    font-style: normal;
+}
+
+.subscribe label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.subscribe input[type="email"] {
+    padding: 8px;
+    border: 1px solid var(--color-footer-text);
+    border-radius: 3px;
+    margin-right: 5px;
+    width: 60%;
+}
+
+.subscribe button {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 3px;
+    cursor: pointer;
+}

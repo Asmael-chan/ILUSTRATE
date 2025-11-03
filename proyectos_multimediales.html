@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>PROYECTOS MULTIMEDIALES - Ilustrarte</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0a1628 0%, #1a0f3a 50%, #0f2847 100%);
+      color: #CDB4DB;
+      text-align: center;
+      min-height: 100vh;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(2, 119, 182, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(114, 9, 183, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    h1 {
+      margin-top: 50px;
+      font-size: 4em;
+      font-weight: 900;
+      letter-spacing: 3px;
+      background: linear-gradient(135deg, #00d9ff 0%, #0099ff 50%, #b366ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 20px rgba(0, 217, 255, 0.3));
+      text-transform: uppercase;
+      word-spacing: 0.1em;
+    }
+
+    .contenedor {
+      max-width: 1200px;
+      margin: 50px auto;
+      background: rgba(15, 25, 50, 0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 217, 255, 0.2);
+      border-radius: 25px;
+      padding: 50px;
+      box-shadow: 
+        0 8px 32px rgba(0, 217, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 0 80px rgba(114, 9, 183, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contenedor::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(0, 217, 255, 0.03) 0%, transparent 70%);
+      animation: float 20s infinite ease-in-out;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(30px, -30px); }
+    }
+
+    .autor {
+      font-weight: 600;
+      margin-bottom: 30px;
+      font-size: 1.1em;
+      color: #e0e0ff;
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 1;
+    }
+
+    img.principal {
+      width: 90%;
+      max-width: 600px;
+      border-radius: 18px;
+      margin: 35px auto;
+      box-shadow: 
+        0 20px 60px rgba(0, 217, 255, 0.15),
+        0 0 40px rgba(179, 102, 255, 0.1),
+        inset 0 0 30px rgba(0, 217, 255, 0.05);
+      border: 1px solid rgba(0, 217, 255, 0.3);
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+      position: relative;
+      z-index: 1;
+    }
+
+    img.principal:hover {
+      transform: scale(1.03) translateY(-5px);
+      box-shadow: 
+        0 30px 80px rgba(0, 217, 255, 0.25),
+        0 0 60px rgba(179, 102, 255, 0.15);
+    }
+
+    p.descripcion {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: #c8c8d8;
+      padding: 0 20px;
+      margin-bottom: 50px;
+      letter-spacing: 0.5px;
+      font-weight: 300;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Contenedor de botones */
+    .botones-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+      margin: 50px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Estilo de los botones */
+    .botones {
+      background: linear-gradient(135deg, rgba(0, 119, 182, 0.4) 0%, rgba(114, 9, 183, 0.3) 100%);
+      color: #00d9ff;
+      border: 1.5px solid rgba(0, 217, 255, 0.4);
+      border-radius: 16px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      box-shadow: 
+        0 0 20px rgba(0, 217, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+      width: 100%;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .botones::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(0, 217, 255, 0.3) 50%, 
+        transparent 100%);
+      transition: left 0.6s ease;
+      z-index: 0;
+    }
+
+    .botones::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0, 217, 255, 0.1) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 0;
+    }
+
+    .botones:hover {
+      background: linear-gradient(135deg, rgba(0, 217, 255, 0.15) 0%, rgba(179, 102, 255, 0.15) 100%);
+      color: #00ffff;
+      border-color: rgba(0, 217, 255, 0.8);
+      box-shadow: 
+        0 0 30px rgba(0, 217, 255, 0.4),
+        inset 0 0 30px rgba(0, 217, 255, 0.1),
+        0 15px 40px rgba(0, 217, 255, 0.15);
+      transform: translateY(-4px);
+    }
+
+    .botones:hover::before {
+      left: 100%;
+    }
+
+    .botones:hover::after {
+      opacity: 1;
+    }
+
+    .botones h2 {
+      font-size: 0.95rem;
+      margin: 0;
+      position: relative;
+      z-index: 1;
+      font-weight: 700;
+    }
+
+    a.volver {
+      display: inline-block;
+      margin-top: 45px;
+      color: #00d9ff;
+      border: 1.5px solid rgba(0, 217, 255, 0.5);
+      padding: 14px 32px;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+      font-weight: 700;
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+      background: rgba(0, 119, 182, 0.1);
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.1);
+    }
+
+    a.volver:hover {
+      background: rgba(0, 217, 255, 0.15);
+      color: #00ffff;
+      border-color: rgba(0, 217, 255, 0.8);
+      box-shadow: 
+        0 0 25px rgba(0, 217, 255, 0.3),
+        inset 0 0 20px rgba(0, 217, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+  </style>
+</head>
+<body>
+  <h1>PROYECTOS MULTIMEDIALES</h1>
+
+  <div class="contenedor">
+    <p class="autor">Autor: Juan Camilo Herrera Castro</p>
+
+    <img src="1f416452-f076-4a06-96d8-d6bcb35fbd79.jpg" alt="Proyectos Multimediales" class="principal">
+
+    <p class="descripcion">
+      Aqui Encontraras todos los Objetos virtuales de Aprendizaje Planteados por el Grado 11-3
+    </p>
+
+    <div class="botones-container">
+      <a href="Ingles.html" class="botones">
+        <h2>Proyecto de Ingles</h2>
+      </a>
+      <a href="Matematicas.html" class="botones">
+        <h2>Proyecto de Matematicas</h2>
+      </a>
+      <a href="pagina web español.html" class="botones">
+        <h2>Proyecto de Español</h2>
+      </a>
+      <a href="Sociales.html"  class="botones"> 
+        <h2>Proyecto de Sociales</h2>
+      </a>
+      <a href="Granja.html" class="botones">
+        <h2>Proyecto de Ciencias Naturales</h2>
+      </a>
+    </div>
+
+    <a class="volver" href="index.html">← Volver al inicio</a>
+  </div>
+
+  <audio id="click-sound" src="mp3/xbox-scroll-left-right.mp3" preload="auto"></audio>
+
+  <script>
+    const botonVolver = document.querySelector('.volver');
+    const sonidoClick = document.getElementById('click-sound');
+
+    botonVolver.addEventListener('click', (event) => {
+      event.preventDefault();
+      sonidoClick.currentTime = 0;
+      sonidoClick.play();
+
+      sonidoClick.onended = () => {
+        window.location.href = botonVolver.href;
+      };
+    });
+  </script>
+</body>
+</html>

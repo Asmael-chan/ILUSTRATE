@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Galería - Arte</title>
+  <link rel="icon" href="Escudo ALLC HD PNG.png" type="image/x-icon">
+<style>
+:root{
+  --bg: #0f1115; 
+  --card: #12151d; 
+  --ink: #eef2ff; 
+  --muted: #a7b0c2;
+  --accent: #ff6b6b; 
+  --accent-2: #feca57; 
+  --border: rgba(255,255,255,.14);
+  --shadow: 0 8px 24px rgba(0,0,0,.35), 0 2px 8px rgba(0,0,0,.2);
+  --radius: 20px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,Arial;
+  background:radial-gradient(1000px 600px at 0% 0%,rgba(255,107,107,.25),transparent 60%),radial-gradient(900px 500px at 100% 10%,rgba(254,202,87,.2),transparent 60%),var(--bg);
+  color:var(--ink)
+}
+.site-header{
+  position:sticky;
+  top:0;
+  background:rgba(18,21,29,.9);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border);
+}
+.brand{
+  padding:20px
+}
+.brand h1{margin:0}
+.brand .tag{color:var(--muted)}
+.top-actions{
+  display:flex;
+  gap:10px;
+  padding:12px 20px;
+  flex-wrap:wrap;
+  border-top:1px solid var(--border)
+}
+.volver{
+  border:1px solid transparent;
+  background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(90deg,var(--accent),var(--accent-2)) border-box;
+  color:var(--ink);
+  padding:8px 14px;
+  border-radius:999px;
+  box-shadow:var(--shadow);
+  text-decoration:none;
+  transition:0.3s;
+}
+.volver:hover{
+  box-shadow:0 0 20px var(--accent), 0 0 40px var(--accent-2);
+}
+.gallery{
+  width:min(1200px,100%);
+  margin:30px auto;
+  padding:0 20px;
+  display:grid;
+  gap:30px
+}
+.item{
+  max-width:800px;
+  display:grid;
+  gap:12px;
+  justify-self:start
+}
+.item:nth-child(even){justify-self:end}
+.frame{
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:0 0 20px var(--accent),0 0 40px var(--accent-2);
+  border:2px solid var(--accent);
+  background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(135deg,var(--accent),var(--accent-2)) border-box;
+  transition:0.3s;
+}
+.frame:hover{
+  box-shadow:0 0 30px var(--accent),0 0 60px var(--accent-2);
+}
+.frame img{width:100%;height:auto;display:block}
+.meta{
+  border:1px dashed var(--border);
+  border-radius:10px;
+  padding:12px;
+  display:grid;
+  gap:8px
+}
+.campo{
+  display:grid;
+  grid-template-columns:100px 1fr;
+  gap:8px
+}
+.campo::before{
+  content:attr(data-label);
+  color:var(--muted);
+  font-weight:bold
+}
+.site-footer{
+  margin-top:60px;
+  border-top:1px solid var(--border);
+  background:rgba(0,0,0,.3);
+  padding:20px;
+  text-align:center;
+  color:var(--muted)
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="brand">
+    <h1>Galería Fotográfica</h1>
+    <p class="tag">Categoría: Arte</p>
+  </div>
+  <nav class="top-actions">
+ <a class="volver" href="index.html">← Volver a la página principal</a>
+  </div>
+      <audio id="click-sound" src="xbox-scroll-left-right.mp3" preload="auto"></audio>
+
+  <script>
+    const botonVolver = document.querySelector('.volver');
+    const sonidoClick = document.getElementById('click-sound');
+
+    botonVolver.addEventListener('click', (event) => {
+      event.preventDefault(); // Evita que cambie de página antes del sonido
+      sonidoClick.currentTime = 0;
+      sonidoClick.play();
+
+      // Espera a que termine el sonido y luego redirige
+      sonidoClick.onended = () => {
+        window.location.href = botonVolver.href;
+      };
+    });
+  </script>
+
+</header>
+
+<main class="gallery">
+  <figure class="item">
+    <div class="frame"><img src="arte-1.jpg" alt="Imagen Arte 1"></div>
+    <figcaption class="meta">
+      <div class="campo" data-label="Nombre:"></div>
+      <div class="campo" data-label="Descripción:"></div>
+      <div class="campo" data-label="Detalles:"></div>
+    </figcaption>
+  </figure>
+  <figure class="item">
+    <div class="frame"><img src="arte-2.jpg" alt="Imagen Arte 2"></div>
+    <figcaption class="meta">
+      <div class="campo" data-label="Nombre:"></div>
+      <div class="campo" data-label="Descripción:"></div>
+      <div class="campo" data-label="Detalles:"></div>
+    </figcaption>
+  </figure>
+</main>
+<main class="gallery">
+  <figure class="item">
+    <div class="frame"><img src="arte-1.jpg" alt="Imagen Arte 1"></div>
+    <figcaption class="meta">
+      <div class="campo" data-label="Nombre:"></div>
+      <div class="campo" data-label="Descripción:"></div>
+      <div class="campo" data-label="Detalles:"></div>
+    </figcaption>
+  </figure>
+  <figure class="item">
+    <div class="frame"><img src="arte-2.jpg" alt="Imagen Arte 2"></div>
+    <figcaption class="meta">
+      <div class="campo" data-label="Nombre:"></div>
+      <div class="campo" data-label="Descripción:"></div>
+      <div class="campo" data-label="Detalles:"></div>
+    </figcaption>
+  </figure>
+</main>
+<main class="gallery">
+  <figure class="item">
+    <div class="frame"><img src="arte-1.jpg" alt="Imagen Arte 1"></div>
+    <figcaption class="meta">
+      <div class="campo" data-label="Nombre:"></div>
+      <div class="campo" data-label="Descripción:"></div>
+      <div class="campo" data-label="Detalles:"></div>
+    </figcaption>
+  </figure>
+  <figure class="item">
+    <div class="frame"><img src="arte-2.jpg" alt="Imagen Arte 2"></div>
+    <figcaption class="meta">
+      <div class="campo" data-label="Nombre:"></div>
+      <div class="campo" data-label="Descripción:"></div>
+      <div class="campo" data-label="Detalles:"></div>
+    </figcaption>
+  </figure>
+</main>
+<main class="gallery">
+  <figure class="item">
+    <div class="frame"><img src="arte-1.jpg" alt="Imagen Arte 1"></div>
+    <figcaption class="meta">
+      <div class="campo" data-label="Nombre:"></div>
+      <div class="campo" data-label="Descripción:"></div>
+      <div class="campo" data-label="Detalles:"></div>
+    </figcaption>
+  </figure>
+  <figure class="item">
+    <div class="frame"><img src="arte-2.jpg" alt="Imagen Arte 2"></div>
+    <figcaption class="meta">
+      <div class="campo" data-label="Nombre:"></div>
+      <div class="campo" data-label="Descripción:"></div>
+      <div class="campo" data-label="Detalles:"></div>
+    </figcaption>
+  </figure>
+</main>
+
+
+<footer class="site-footer">
+  <p>© Tu Nombre — Portafolio Fotográfico</p>
+  <p>Contacto: tuemail@ejemplo.com</p>
+</footer>
+</body>
+</html>

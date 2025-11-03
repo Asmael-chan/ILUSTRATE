@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OVA - Conociendo los Animales de la Granja</title>
+  <link rel="stylesheet" href="granja.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="vaca.svg">
+</head>
+<body>
+
+  <!-- Navegación -->
+  <div class="contenedor sombra nav-wrapper">
+    <nav class="nav">
+      <button class="nav__toggle" id="menuToggle" aria-expanded="false" aria-controls="menuLista">
+        ☰ Menú
+      </button>
+      <ul class="nav__lista" id="menuLista">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#sobre-ova">¿Qué es el OVA?</a></li>
+        <li><a href="#ova-interactivo">OVA Interactivo</a></li>
+        <li><a href="#aprendizaje">¿Qué aprenderás?</a></li>
+        <li><a href="#galeria">Galería</a></li>
+        <li><a href="#herramientas">Herramientas TIC</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Encabezado -->
+  <header id="inicio" class="encabezado sombra">
+    <div class="contenedor">
+      <img src="logo.png" alt="Logo del proyecto La Granja" class="logo" />
+      <h1>Conociendo los Animales de la Granja</h1>
+      <h2>OVA Interactivo para niños de transición</h2>
+      <p>
+        Este Objeto Virtual de Aprendizaje está diseñado para que los niños aprendan de forma divertida sobre
+        los animales de la granja utilizando herramientas TIC.
+      </p>
+    </div>
+  </header>
+
+  <!-- Secciones -->
+  <section id="sobre-ova">
+    <h2>¿Qué es este OVA?</h2>
+    <p>
+      Es un recurso educativo digital con actividades interactivas que facilita el aprendizaje de los niños sobre
+      los animales de la granja, promoviendo la exploración y el aprendizaje significativo a través de imágenes, sonidos
+      y dinámicas sencillas.
+    </p>
+  </section>
+
+  <section id="ova-interactivo">
+    <h2>Explora el OVA</h2>
+    <p>Interactúa con el contenido dando clic dentro del OVA:</p>
+    <div class="iframe-ova">
+      <iframe title="OVA - Conociendo los Animales de la Granja"
+              src="https://view.genially.com/68cb0a133f953dea5b831c31"
+              allowfullscreen></iframe>
+    </div>
+    <p class="nota">Si el OVA no carga, verifica tu conexión a internet o abre el enlace en una pestaña nueva.</p>
+  </section>
+
+  <section id="aprendizaje">
+    <h2>¿Qué aprenderás?</h2>
+    <ul>
+      <li>Identificar los principales animales de la granja.</li>
+      <li>Reconocer algunos de sus sonidos característicos.</li>
+      <li>Participar en actividades digitales sencillas (Canva, Genially, Scratch).</li>
+      <li>Fortalecer habilidades cognitivas y digitales básicas.</li>
+    </ul>
+  </section>
+
+  <!-- Galería actualizada (5 imágenes) -->
+  <section id="galeria">
+    <h2>Galería</h2>
+    <p>Imágenes ilustrativas de los animales de la granja:</p>
+    <div class="imagenes-galeria">
+      <figure>
+        <img src="vaca.png" alt="Vaca en la granja" />
+        <figcaption>Vaca</figcaption>
+      </figure>
+      <figure>
+        <img src="oveja.png" alt="Oveja blanca en el campo" />
+        <figcaption>Oveja</figcaption>
+      </figure>
+      <figure>
+        <img src="caballo.png" alt="Caballo marrón en el establo" />
+        <figcaption>Caballo</figcaption>
+      </figure>
+      <figure>
+        <img src="cerdo.png" alt="Cerdo rosado en el corral" />
+        <figcaption>Cerdo</figcaption>
+      </figure>
+      <figure>
+        <img src="gallina.png" alt="Gallina roja en la granja" />
+        <figcaption>Gallina</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="herramientas">
+    <h2>Herramientas TIC</h2>
+    <p>Estas son algunas de las herramientas usadas para crear los recursos del OVA:</p>
+    <div class="logos-herramientas">
+      <img src="canva.png" alt="Logo de Canva" />
+      <img src="genially.png" alt="Logo de Genially" />
+      <img src="sc.png" alt="Logo de Scratch" />
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="pie sombra">
+    <div class="contenedor">
+      <p><strong>Institución Educativa:</strong> Alberto Llegar Camargo • Área: Investigación • Grado: 11-3</p>
+      <p><strong>Proyecto OVA:</strong> <span class="resaltado">Conociendo los Animales de la Granja</span> (niños de transición)</p>
+      <p>Integrantes: Wildrianny Peroza, Andrea Mendieta, Karol Rodriguez, Laura Buitrago, Heilyn Arévalo.<br>Docente orientador: Jesús Osorio.</p>
+      <p>Villavicencio, Meta • 21/10/2025</p>
+    </div>
+  </footer>
+
+  <script src="menu.js"></script>
+</body>
+</html>
