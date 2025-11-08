@@ -30,7 +30,7 @@
   </div>
 
   <h1>ILUSTRARTE</h1>
-  <p style="text-align:center; font-size: 0.9rem;">Los eventos más importantes de nuestra institución llerista.</p>
+  <p style="text-align:center; font-size: 1.2rem;">Los eventos más importantes de nuestra institución llerista.</p>
 
   <div class="navegacion">
     <a href="https://linktr.ee/LLERASILUSTRARTE11" class="boton-cyberpunk" id="btn20241">2024</a>
@@ -88,6 +88,8 @@
   <audio id="sidebarButtonSound" preload="auto">
     <source src="xbox-series-return-to-xmb.mp3" type="audio/mpeg">
   </audio>
+
+  <audio id="kingCrimsonSound" preload="auto" src="y2mate_mQRydX9.mp3"></audio>
 
   <script>
     // Función para reproducir sonido
@@ -183,6 +185,185 @@
         window.location.href = url;
       }, 2000);
     });
+    
   </script>
+<style>
+  /* Fondo rojo tipo King Crimson */
+  #crimsonOverlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(255, 0, 0, 0.85);
+    backdrop-filter: blur(3px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 3rem;
+    font-family: 'Orbitron', sans-serif;
+    text-shadow: 0 0 15px #ff0000;
+    z-index: 9999;
+    animation: glitch 0.12s infinite;
+  }
+
+  @keyframes glitch {
+    0% { opacity: 1; transform: translate(0,0); }
+    25% { opacity: 0.8; transform: translate(2px,-2px); }
+    50% { opacity: 1; transform: translate(-2px,2px); }
+    75% { opacity: 0.9; transform: translate(3px,0); }
+    100% { opacity: 1; transform: translate(0,0); }
+  }
+
+  /* 🎬 Modal del video */
+  #johnsonModal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  #johnsonModal video {
+    width: 60%;
+    max-width: 700px;
+    border: 3px solid #00ff99;
+    border-radius: 15px;
+    box-shadow: 0 0 25px #00ff99;
+  }
+
+  /* Botón cerrar arriba */
+  #closeJohnson {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 1.2rem;
+    color: #00ff99;
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid #00ff99;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    transition: all 0.2s;
+  }
+
+  #closeJohnson:hover {
+    background: #00ff99;
+    color: black;
+    box-shadow: 0 0 15px #00ff99;
+  }
+</style>
+
+<!-- Modal con el video secreto -->
+<div id="johnsonModal">
+  <button id="closeJohnson">✕ Cerrar</button>
+  <video id="johnsonVideo" controls>
+    <source src="WhatsApp Video 2025-11-08 at 6.24.26 PM.mp4" type="video/mp4">
+    Tu navegador no soporta video HTML5.
+  </video>
+</div>
+
+
+<div id="crimsonOverlay"></div>
+
+<!-- Modal con el video secreto -->
+<div id="johnsonModal">
+  <video id="johnsonVideo" controls>
+    <source src="WhatsApp Video 2025-11-08 at 6.24.26 PM.mp4" type="video/mp4">
+    Tu navegador no soporta video HTML5.
+  </video>
+  <button id="closeJohnson">Cerrar</button>
+</div>
+
+<script>
+  // --- KONAMI CODE ---
+  const konamiCode = [
+    'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
+    'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'
+  ];
+
+  let konamiPosition = 0;
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === konamiCode[konamiPosition]) {
+      konamiPosition++;
+      if (konamiPosition === konamiCode.length) {
+        activateKingCrimson();
+        konamiPosition = 0;
+      }
+    } else {
+      konamiPosition = 0;
+    }
+  });
+
+  function activateKingCrimson() {
+    const overlay = document.getElementById('crimsonOverlay');
+    const sound = document.getElementById('kingCrimsonSound');
+
+    overlay.style.display = 'flex';
+    sound.currentTime = 0;
+    sound.play();
+
+    // Efecto 3 segundos, luego aparece el video
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      const modal = document.getElementById('johnsonModal');
+      const video = document.getElementById('johnsonVideo');
+      modal.style.display = 'flex';
+      video.currentTime = 0;
+      video.play();
+    }, 3000);
+  }
+
+  // Botón cerrar del video
+  document.getElementById('closeJohnson').addEventListener('click', () => {
+    const modal = document.getElementById('johnsonModal');
+    const video = document.getElementById('johnsonVideo');
+    video.pause();
+    modal.style.display = 'none';
+  });
+</script>
+  <script>
+let tapCount = 0;
+let tapTimer;
+
+// Detecta 10 toques seguidos en cualquier parte del body
+document.body.addEventListener('touchstart', () => {
+  tapCount++;
+  clearTimeout(tapTimer);
+
+  if (tapCount === 10) {
+    activarEasterEgg();
+    tapCount = 0;
+  }
+
+  // Reinicia el contador si pasa 1 segundo sin tocar
+  tapTimer = setTimeout(() => {
+    tapCount = 0;
+  }, 1000);
+});
+
+function activarEasterEgg() {
+  // Efecto rojo
+  const overlay = document.getElementById('crimsonOverlay');
+  overlay.style.display = 'flex';
+  overlay.style.animation = 'glitchRed 3s forwards';
+
+  // Sonido King Crimson
+  const audio = new Audio('audio/kingcrimson.mp3');
+  audio.play();
+
+  // Mostrar video después del efecto
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    document.getElementById('easterEggVideo').style.display = 'block';
+  }, 3000);
+}
+</script>
 </body>
 </html>
