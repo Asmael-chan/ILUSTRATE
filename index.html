@@ -339,19 +339,26 @@ document.body.addEventListener('touchstart', () => {
 });
 
 function activarEasterEgg() {
-  // Efecto rojo
+  // Mostrar efecto rojo
   const overlay = document.getElementById('crimsonOverlay');
   overlay.style.display = 'flex';
-  overlay.style.animation = 'glitchRed 3s forwards';
 
-  // Sonido King Crimson
-  const audio = new Audio('y2mate_mQRydX9.mp3');
-  audio.play();
+  // Sonido King Crimson (asegura interacción antes del video)
+  const sound = document.getElementById('kingCrimsonSound');
+  sound.currentTime = 0;
+  sound.play().catch(() => {});
 
-  // Mostrar video después del efecto
+  // Luego de 3 segundos, muestra el video
   setTimeout(() => {
     overlay.style.display = 'none';
-    document.getElementById('easterEggVideo').style.display = 'block';
+    const modal = document.getElementById('johnsonModal');
+    const video = document.getElementById('johnsonVideo');
+    modal.style.display = 'flex';
+    video.currentTime = 0;
+    video.play().catch(() => {
+      // Si no puede reproducir automáticamente, muestra botón
+      alert("Toca 'Play' para ver el video secreto 🔒");
+    });
   }, 3000);
 }
 </script>
