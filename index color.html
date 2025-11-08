@@ -21,7 +21,7 @@
       <li><a href="index color.html">🏠 Inicio</a></li>
       <li><a href="editorial.html">📰 Editorial</a></li>
       <li><a href="desarrolladores.html">📧 Autores</a></li>
-      <li><a href="index.html">🌞 Modo Oscuro</a></li>
+      <li><a href="index.html">🌙 Modo Oscuro</a></li>
     </ul>
   </div>
 
@@ -34,7 +34,7 @@
 
   <div class="navegacion">
     <a href="https://linktr.ee/LLERASILUSTRARTE11" class="boton-cyberpunk" id="btn20241">2024</a>
-    <a href="#2025" class="boton-cyberpunk" id="btn20251">2025</a>
+    <a href="index color.html" class="boton-cyberpunk" id="btn20251">2025</a>
   </div>
 
   <div class="container">
@@ -90,9 +90,8 @@
     <source src="xbox-series-return-to-xmb.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Script funcional -->
   <script>
-    // Función para reproducir sonido seguro (SE DECLARA UNA SOLA VEZ AL INICIO)
+    // Función para reproducir sonido
     function playSound(audio) {
       if (!audio) return;
       audio.pause();
@@ -121,6 +120,11 @@
       }
     });
 
+    // Función para la sidebar toggle (compatibilidad con onclick)
+    function toggleSidebar() {
+      // Ya manejado por el addEventListener
+    }
+
     // Sonido y delay para los botones del sidebar
     const sidebarLinks = document.querySelectorAll('.sidebar-menu a');
     const sidebarButtonSound = document.getElementById('sidebarButtonSound');
@@ -139,45 +143,55 @@
 
     if (sidebarButtonSound) sidebarButtonSound.volume = 0.5;
 
-    // Hover y click en secciones
+    // Hover y click en secciones principales
     const secciones = document.querySelectorAll('.seccion');
     const hoverSound = document.getElementById('hoverSoundMain');
     const clickSound = document.getElementById('clickSound');
 
     secciones.forEach(sec => {
       sec.addEventListener('mouseenter', () => playSound(hoverSound));
-      sec.addEventListener('click', () => playSound(clickSound));
+      sec.addEventListener('click', function(e) {
+        e.preventDefault();
+        playSound(clickSound);
+        const url = this.getAttribute('href');
+        
+        setTimeout(() => {
+          window.location.href = url;
+        }, 2000);
+      });
     });
 
     // Ajuste de volumen
     if (hoverSound) hoverSound.volume = 0.6;
     if (clickSound) clickSound.volume = 0.6;
 
-    // Sonido para los botones 2024 y 2025
+    // Botones 2024 y 2025
     const btn20241 = document.getElementById('btn20241');
     const btn20251 = document.getElementById('btn20251');
     const clickYear1 = document.getElementById('clickYear1');
 
-    // Retraso de 2 segundos al abrir enlaces
-    function delayedNavigation(element, sound) {
-      if (!element) return;
-      element.addEventListener('click', function(e) {
+    if (btn20241) {
+      btn20241.addEventListener('click', function(e) {
         e.preventDefault();
-        playSound(sound);
+        playSound(clickYear1);
         const url = this.getAttribute('href');
-
+        
         setTimeout(() => {
-          window.open(url, this.target || '_self');
+          window.open(url, '_blank');
         }, 2000);
       });
     }
 
-    delayedNavigation(btn20241, clickYear1);
-    delayedNavigation(btn20251, clickYear1);
-
-    // Función para la sidebar toggle (compatibilidad con onclick)
-    function toggleSidebar() {
-      // Ya manejado por el addEventListener
+    if (btn20251) {
+      btn20251.addEventListener('click', function(e) {
+        e.preventDefault();
+        playSound(clickYear1);
+        const url = this.getAttribute('href');
+        
+        setTimeout(() => {
+          window.location.href = url;
+        }, 2000);
+      });
     }
   </script>
 </body>
