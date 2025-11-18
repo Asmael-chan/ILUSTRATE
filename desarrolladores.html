@@ -298,6 +298,192 @@
         display: none;
       }
     }
+
+  /* ============================================
+   RESPONSIVE DESIGN - Optimizado para móviles
+   ============================================ */
+
+/* Box-sizing global */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Tamaños de texto adaptables - balanceados */
+h1 {
+  font-size: clamp(2.2em, 6vw, 3.5em);
+  padding: 0 15px;
+  margin-top: clamp(25px, 5vh, 40px);
+}
+
+.autor {
+  font-size: clamp(1rem, 3vw, 1.1em);
+}
+
+p.descripcion {
+  font-size: clamp(0.95rem, 2.2vw, 1rem);
+  line-height: 1.6;
+  padding: 0 15px;
+}
+
+.pdf-section h2 {
+  font-size: clamp(1.4em, 4.5vw, 1.8em);
+}
+
+.pdf-btn {
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  padding: clamp(10px, 2vw, 12px) clamp(20px, 4vw, 25px);
+}
+
+.page-number {
+  font-size: clamp(0.8rem, 2.2vw, 0.9rem);
+  padding: clamp(6px, 1.5vw, 8px) clamp(10px, 2vw, 12px);
+}
+
+.modal-page-info {
+  font-size: clamp(0.95rem, 2.8vw, 1.1rem);
+}
+
+.modal-btn {
+  font-size: clamp(0.9rem, 2.3vw, 1rem);
+  padding: clamp(10px, 2vw, 12px) clamp(18px, 3.5vw, 25px);
+}
+
+.close-magazine-modal {
+  font-size: clamp(2rem, 5.5vw, 2.5rem);
+  width: clamp(45px, 11vw, 50px);
+  height: clamp(45px, 11vw, 50px);
+  top: clamp(10px, 2vh, 15px);
+  right: clamp(15px, 3vw, 25px);
+}
+
+a.volver {
+  font-size: clamp(0.95rem, 2.3vw, 1rem);
+  padding: clamp(10px, 2vw, 12px) clamp(18px, 3.5vw, 20px);
+}
+
+/* Mejoras para el scroll */
+.magazine-pages {
+  -webkit-overflow-scrolling: touch;
+  padding: 15px 10px;
+}
+
+.magazine-page {
+  min-width: 220px;
+}
+
+img.principal {
+  width: 100%;
+  max-width: 600px;
+  display: block;
+  margin: 20px auto;
+}
+
+/* TABLETS (768px o menos) */
+@media (max-width: 768px) {
+  .contenedor {
+    margin: 20px 15px;
+    padding: 20px 15px;
+  }
+
+  .magazine-pages {
+    gap: 12px;
+    padding: 12px 8px;
+  }
+
+  .magazine-page {
+    flex: 0 0 calc(90% - 10px);
+    min-width: 280px;
+    max-width: 400px;
+  }
+
+  .pdf-section {
+    padding: 20px 15px;
+    margin-top: 35px;
+  }
+
+  .pdf-container {
+    padding: 18px 15px;
+  }
+
+  .pdf-controls {
+    padding: 0 10px;
+    gap: 12px;
+  }
+
+  .pdf-btn {
+    width: 100%;
+    max-width: 400px;
+    justify-content: center;
+  }
+
+  .magazine-modal-content {
+    width: 96%;
+    height: 92vh;
+    border-width: 3px;
+  }
+
+  .magazine-modal-page {
+    padding: 12px;
+  }
+
+  .magazine-modal-footer {
+    flex-direction: column;
+    padding: 15px;
+    gap: 12px;
+  }
+
+  .modal-page-controls {
+    width: 100%;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .modal-btn {
+    flex: 1;
+    min-width: 130px;
+  }
+}
+
+/* MÓVILES PEQUEÑOS (480px o menos) */
+@media (max-width: 480px) {
+  .contenedor {
+    margin: 15px 10px;
+    padding: 18px 12px;
+  }
+
+  .magazine-page {
+    flex: 0 0 calc(95% - 8px);
+    min-width: 260px;
+  }
+
+  .modal-btn {
+    padding: 10px 16px;
+    min-width: 115px;
+  }
+
+  .pdf-section {
+    padding: 18px 12px;
+  }
+}
+
+/* MÓVILES MUY PEQUEÑOS (360px o menos) */
+@media (max-width: 360px) {
+  .magazine-page {
+    flex: 0 0 calc(98% - 5px);
+  }
+
+  .modal-page-controls {
+    flex-direction: column;
+  }
+
+  .modal-btn {
+    width: 100%;
+  }
+}
   </style>
 </head>
 <body>
