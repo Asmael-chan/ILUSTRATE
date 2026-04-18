@@ -2,548 +2,1083 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>AUTORES - Ilustrarte</title>
-  <link rel="icon" href="Escudo ALLC HD PNG.png" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AUTORES — ILUSTRARTE</title>
+  <link rel="icon" href="img/Escudo ALLC HD PNG.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════
+       VARIABLES & RESET
+    ═══════════════════════════════════════ */
+    :root {
+      --g:       #00ff88;
+      --g2:      #00cc66;
+      --g3:      #003d22;
+      --g-glow:  rgba(0,255,136,0.35);
+      --g-glow2: rgba(0,255,136,0.12);
+      --cy:      #00f7ff;
+      --cy-glow: rgba(0,247,255,0.3);
+      --negro:   #000000;
+      --panel:   rgba(0,18,10,0.92);
+      --panel2:  rgba(0,30,16,0.85);
+      --border:  rgba(0,255,136,0.25);
+      --border2: rgba(0,255,136,0.08);
+      --txt:     #c8ffe0;
+      --txt2:    #6aff9a;
+      --txt3:    rgba(200,255,224,0.5);
+      --gold:    #ffe44d;
+      --gold-g:  rgba(255,228,77,0.35);
+      --F1: 'Orbitron', monospace;
+      --F2: 'Rajdhani', sans-serif;
+      --F3: 'Share Tech Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #0a0a23, #1a1a3a);
-      color: #00d4aa;
-      text-align: center;
+      font-family: var(--F2);
+      background: var(--negro);
+      background-image:
+        radial-gradient(ellipse 90% 50% at 50% -5%, rgba(0,255,136,0.06) 0%, transparent 55%),
+        repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,255,136,0.012) 3px, rgba(0,255,136,0.012) 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(0,255,136,0.007) 40px, rgba(0,255,136,0.007) 41px);
+      color: var(--txt);
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    h1 {
-      margin-top: 40px;
-      font-size: 3.5em;
-      text-shadow: 0 0 15px #00d4aa, 0 0 30px #00d4aa;
-      margin-bottom: 50px;
+    /* Scanlines */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(to bottom, transparent 0px, transparent 3px, rgba(0,0,0,0.07) 3px, rgba(0,0,0,0.07) 4px);
+      pointer-events: none;
+      z-index: 9000;
     }
 
-    .contenedor-principal {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
+    ::selection { background: var(--g); color: var(--negro); }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--negro); }
+    ::-webkit-scrollbar-thumb { background: var(--g2); box-shadow: 0 0 6px var(--g); }
+
+    /* ═══════════════════════════════════════
+       CANVAS MATRIX
+    ═══════════════════════════════════════ */
+    #matrixBg {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
     }
 
-    .autor-card {
-      background: rgba(0, 0, 0, 0.5);
-      border: 2px solid #00d4aa;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 0 25px rgba(0, 212, 170, 0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      max-width: 350px;
-      margin: 20px;
-    }
-
-    .autor-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 35px rgba(0, 212, 170, 0.5);
-    }
-
-    .foto-autor {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      margin: 0 auto 10px;
-      border: 3px solid #00d4aa;
-      box-shadow: 0 0 20px rgba(0, 212, 170, 0.4);
-      object-fit: cover;
-      display: block;
-    }
-
-    .cargo {
-      font-size: 1.4em;
-      font-weight: bold;
-      color: #00d4aa;
-      margin-bottom: 10px;
-      text-shadow: 0 0 10px #00d4aa;
-    }
-
-    .nombre {
-      font-size: 1.1em;
-      color: #ffffff;
-      margin-bottom: 15px;
-      font-weight: 500;
-    }
-
-    .descripcion {
-      font-size: 0.95em;
-      color: #cccccc;
-      line-height: 1.6;
-    }
-
-    .jefe {
-      border-color: #ffd700;
-      color: #ffd700;
-    }
-
-    .jefe .cargo {
-      color: #ffd700;
-      text-shadow: 0 0 10px #ffd700;
-    }
-
-    .jefe .foto-autor {
-      border-color: #ffd700;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-    }
-
-    .jefe:hover {
-      box-shadow: 0 0 35px rgba(255, 215, 0, 0.5);
-    }
-
-    /* Bloques de pareja */
-    .autor-pareja {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      max-width: 600px;
-      margin: 0 auto 50px;
+    /* ═══════════════════════════════════════
+       HEADER / HUD TOP BAR
+    ═══════════════════════════════════════ */
+    .hud-top {
       position: relative;
-      overflow: visible;
+      z-index: 10;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,8,4,0.96);
+      padding: 0 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 52px;
+      box-shadow: 0 0 40px rgba(0,255,136,0.08);
     }
 
-    /* King Crimson de fondo */
-    .autor-pareja::before {
+    .hud-top::after {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-image: url('1200px-King_crimson_Arc_2-png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      opacity: 0.15;
-      z-index: 0;
-      border-radius: 15px;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--g), var(--cy), var(--g), transparent);
+      box-shadow: 0 0 12px var(--g);
     }
 
-    .autor-pareja > * {
-      position: relative;
-      z-index: 1;
-    }
-
-    .fotos-pareja {
+    .hud-logo {
+      font-family: var(--F1);
+      font-size: 0.75rem;
+      letter-spacing: 5px;
+      color: var(--g);
+      text-shadow: 0 0 10px var(--g);
       display: flex;
-      gap: 40px;
-      justify-content: center;
-      flex-wrap: wrap;
-      position: relative;
-      z-index: 1;
+      align-items: center;
+      gap: 12px;
     }
 
-    .fotos-pareja .foto-autor {
-      width: 130px;
-      height: 130px;
+    .hud-logo img {
+      width: 34px;
+      border: 1px solid var(--g);
+      border-radius: 4px;
+      box-shadow: 0 0 10px var(--g-glow);
+      clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
+    }
+
+    .hud-status {
+      font-family: var(--F3);
+      font-size: 0.65rem;
+      color: var(--txt3);
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .hud-status span { display: flex; align-items: center; gap: 6px; }
+
+    .dot-live {
+      width: 6px; height: 6px;
+      background: var(--g);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--g);
+      animation: blink 1.4s infinite;
+    }
+
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+    .hud-nav { display: flex; gap: 16px; align-items: center; }
+
+    .hud-nav a {
+      font-family: var(--F1);
+      font-size: 0.55rem;
+      letter-spacing: 2px;
+      color: var(--txt3);
+      text-decoration: none;
+      padding: 6px 14px;
+      border: 1px solid rgba(0,255,136,0.15);
+      clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+      transition: all 0.25s;
+    }
+
+    .hud-nav a:hover {
+      color: var(--g);
+      border-color: var(--g);
+      box-shadow: 0 0 16px var(--g-glow);
+      background: rgba(0,255,136,0.05);
+    }
+
+    /* ═══════════════════════════════════════
+       MAIN TITLE — WINDOW HEADER
+    ═══════════════════════════════════════ */
+    .page-header {
+      position: relative;
+      z-index: 10;
+      max-width: 1280px;
+      margin: 40px auto 0;
+      padding: 0 30px;
+    }
+
+    .window-bar {
+      background: rgba(0,12,6,0.98);
+      border: 1px solid var(--border);
+      border-bottom: none;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+    }
+
+    .window-title-txt {
+      font-family: var(--F1);
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: 8px;
+      color: var(--g);
+      text-shadow: 0 0 20px var(--g), 0 0 40px var(--g-glow);
+      animation: glitchH 9s infinite;
+    }
+
+    @keyframes glitchH {
+      0%,88%,90%,100% { transform:translate(0); text-shadow: 0 0 20px var(--g), 0 0 40px var(--g-glow); }
+      89% { transform:translate(-2px,0); text-shadow: -3px 0 var(--cy), 3px 0 #ff0055, 0 0 20px var(--g); }
+    }
+
+    .window-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--F3);
+      font-size: 0.6rem;
+      color: var(--txt3);
+      letter-spacing: 2px;
+    }
+
+    .window-controls::before {
+      content: 'SYS.AUTH_MODULE v2.4.1';
+    }
+
+    .win-dots { display: flex; gap: 6px; }
+    .win-dot {
+      width: 10px; height: 10px;
+      border: 1px solid;
+      clip-path: polygon(3px 0, 100% 0, calc(100% - 3px) 100%, 0 100%);
+    }
+    .win-dot:nth-child(1) { border-color: var(--g); background: var(--g-glow2); }
+    .win-dot:nth-child(2) { border-color: var(--cy); background: var(--cy-glow); opacity: 0.5; }
+    .win-dot:nth-child(3) { border-color: rgba(255,255,255,0.2); opacity: 0.3; }
+
+    .window-content-bar {
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--g);
+      background: linear-gradient(180deg, rgba(0,255,136,0.04) 0%, transparent 40%);
+      box-shadow: 0 0 40px rgba(0,255,136,0.06), inset 0 0 60px rgba(0,255,136,0.02);
+      padding: 10px 20px 6px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .sys-tag {
+      font-family: var(--F3);
+      font-size: 0.6rem;
+      color: var(--txt3);
+      letter-spacing: 2px;
+    }
+
+    .sys-bar {
+      flex: 1;
+      height: 2px;
+      background: repeating-linear-gradient(90deg, var(--g2) 0px, var(--g2) 4px, transparent 4px, transparent 8px);
+      opacity: 0.4;
+    }
+
+    /* ═══════════════════════════════════════
+       MAIN LAYOUT
+    ═══════════════════════════════════════ */
+    .main-grid {
+      position: relative;
+      z-index: 10;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 30px 60px;
+    }
+
+    /* ═══════════════════════════════════════
+       SECCIÓN: JEFES (2 columnas grandes tipo la imagen)
+    ═══════════════════════════════════════ */
+    .section-label {
+      font-family: var(--F1);
+      font-size: 0.58rem;
+      letter-spacing: 5px;
+      color: var(--txt3);
+      text-transform: uppercase;
+      margin: 36px 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 20px; height: 1px;
+      background: var(--g);
+      box-shadow: 0 0 6px var(--g);
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1; height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    /* JEFES - layout 2 cards grandes */
+    .jefes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    /* CARD ESTILO CYBERPUNK — inspirada en la imagen */
+    .cp-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+      clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+    }
+
+    .cp-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--g), transparent);
+      opacity: 0.7;
+    }
+
+    .cp-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(90deg, transparent, transparent 24px, rgba(0,255,136,0.012) 24px, rgba(0,255,136,0.012) 25px);
+      pointer-events: none;
+    }
+
+    .cp-card:hover {
+      border-color: var(--g);
+      box-shadow: 0 0 40px var(--g-glow), 0 0 80px rgba(0,255,136,0.06), inset 0 0 30px rgba(0,255,136,0.04);
+    }
+
+    /* Card GOLD para jefes */
+    .cp-card.gold {
+      border-color: rgba(255,228,77,0.3);
+    }
+
+    .cp-card.gold::before {
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .cp-card.gold:hover {
+      border-color: var(--gold);
+      box-shadow: 0 0 40px var(--gold-g), 0 0 80px rgba(255,228,77,0.08), inset 0 0 30px rgba(255,228,77,0.04);
+    }
+
+    /* Card header bar */
+    .card-header {
+      background: rgba(0,8,4,0.95);
+      border-bottom: 1px solid var(--border2);
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-header-tag {
+      font-family: var(--F3);
+      font-size: 0.6rem;
+      color: var(--txt3);
+      letter-spacing: 2px;
+    }
+
+    .card-header-bars {
+      display: flex;
+      gap: 3px;
+      align-items: center;
+    }
+
+    .card-header-bars span {
+      display: block;
+      height: 10px;
+      width: 3px;
+      background: var(--g);
+      opacity: 0.5;
+    }
+
+    .card-header-bars span:nth-child(2) { height: 14px; opacity: 0.7; }
+    .card-header-bars span:nth-child(3) { height: 18px; opacity: 1; box-shadow: 0 0 6px var(--g); }
+    .card-header-bars span:nth-child(4) { height: 14px; opacity: 0.7; }
+    .card-header-bars span:nth-child(5) { height: 10px; opacity: 0.5; }
+
+    .gold .card-header-bars span { background: var(--gold); }
+    .gold .card-header-bars span:nth-child(3) { box-shadow: 0 0 6px var(--gold); }
+
+    /* Card foto — estilo imagen de referencia (X laser lines) */
+    .card-foto-wrap {
+      position: relative;
+      overflow: hidden;
+      background: rgba(0,5,3,0.9);
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Líneas X cruzadas estilo referencia */
+    .card-foto-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(45deg, transparent 45%, rgba(0,255,136,0.12) 49.5%, rgba(0,255,136,0.18) 50.5%, transparent 54%),
+        linear-gradient(-45deg, transparent 45%, rgba(0,255,136,0.12) 49.5%, rgba(0,255,136,0.18) 50.5%, transparent 54%);
+      pointer-events: none;
       z-index: 2;
     }
 
-    /* Contenedor de cooperadores */
-    .cooperadores {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 40px;
-      margin: 40px 0;
-    }
-
-    /* Diseñador general */
-    .diseñador-centro {
-      display: flex;
-      justify-content: center;
-      margin: 50px 0;
-    }
-
-    a.volver {
-      display: inline-block;
-      margin-top: 40px;
-      color: #00d4aa;
-      border: 2px solid #00d4aa;
-      padding: 12px 25px;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 1.1em;
-      transition: all 0.3s ease;
-    }
-
-    a.volver:hover {
-      background: #00d4aa;
-      color: #000;
-      box-shadow: 0 0 20px #00d4aa;
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.5em;
-      }
-      
-      .foto-autor {
-        width: 100px;
-        height: 100px;
-      }
-
-      .fotos-pareja .foto-autor {
-        width: 100px;
-        height: 100px;
-      }
-    }
-        .autor-pareja::before {
+    /* Esquinas decorativas tipo HUD */
+    .card-foto-wrap::after {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-image: url('david-and-lucy-from-cyberpunk-edgerunners-wallpaper-3554x1999_53.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      opacity: 0.15;
-      z-index: 0;
-      border-radius: 15px;
-    }
-
-    .autor-pareja > * {
-      position: relative;
-      z-index: 1;
-    }
-
-    .fotos-pareja {
-      display: flex;
-      gap: 40px;
-      justify-content: center;
-      flex-wrap: wrap;
-      position: relative;
-    }
-
-    .fotos-pareja .foto-autor {
-      width: 130px;
-      height: 130px;
-    }
-
-    /* King Crimson flotante */
-    .king-crimson {
-      position: absolute;
-      right: -220px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 150px;
-      height: auto;
+      inset: 8px;
+      border: 1px solid rgba(0,255,136,0.15);
+      clip-path: polygon(0 0, 20px 0, 20px 2px, 2px 2px, 2px 20px, 0 20px, 0 0,
+                         100% 0, 100% 20px, calc(100% - 0px) 20px, calc(100% - 2px) 2px, calc(100% - 20px) 2px, calc(100% - 20px) 0, 100% 0,
+                         100% 100%, calc(100% - 20px) 100%, calc(100% - 20px) calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) calc(100% - 20px), 100% calc(100% - 20px), 100% 100%,
+                         0 100%, 0 calc(100% - 20px), 2px calc(100% - 20px), 2px calc(100% - 2px), 20px calc(100% - 2px), 20px 100%, 0 100%);
       pointer-events: none;
+      z-index: 3;
+    }
+
+    .card-foto-wrap img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--g);
+      box-shadow: 0 0 24px var(--g-glow), 0 0 60px rgba(0,255,136,0.1);
+      position: relative;
+      z-index: 4;
+      transition: transform 0.4s ease, box-shadow 0.3s ease;
+      filter: brightness(0.9) saturate(1.1);
+    }
+
+    .cp-card:hover .card-foto-wrap img {
+      transform: scale(1.06);
+      box-shadow: 0 0 40px var(--g-glow), 0 0 80px rgba(0,255,136,0.2);
+    }
+
+    .gold .card-foto-wrap img {
+      border-color: var(--gold);
+      box-shadow: 0 0 24px var(--gold-g), 0 0 60px rgba(255,228,77,0.1);
+    }
+
+    .gold .card-foto-wrap::before {
+      background:
+        linear-gradient(45deg, transparent 45%, rgba(255,228,77,0.1) 49.5%, rgba(255,228,77,0.16) 50.5%, transparent 54%),
+        linear-gradient(-45deg, transparent 45%, rgba(255,228,77,0.1) 49.5%, rgba(255,228,77,0.16) 50.5%, transparent 54%);
+    }
+
+    /* Label IMG overlay */
+    .img-label {
+      position: absolute;
+      bottom: 10px; left: 14px;
+      font-family: var(--F3);
+      font-size: 0.6rem;
+      color: var(--txt3);
+      letter-spacing: 2px;
+      z-index: 5;
+    }
+
+    .img-label-r {
+      position: absolute;
+      bottom: 10px; right: 14px;
+      font-family: var(--F3);
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      z-index: 5;
+      animation: blink 2s infinite;
+    }
+
+    .img-label-r.verde { color: var(--g); }
+    .img-label-r.gold  { color: var(--gold); }
+
+    /* Card body */
+    .card-body {
+      padding: 16px 18px 18px;
+      background: var(--panel2);
+      position: relative;
+      z-index: 5;
+    }
+
+    .card-cargo {
+      font-family: var(--F1);
+      font-size: 0.6rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--g);
+      text-shadow: 0 0 10px var(--g-glow);
+      margin-bottom: 6px;
+    }
+
+    .card-cargo.gold-txt {
+      color: var(--gold);
+      text-shadow: 0 0 10px var(--gold-g);
+    }
+
+    .card-nombre {
+      font-family: var(--F2);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .card-divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--g), transparent);
+      margin-bottom: 10px;
+      opacity: 0.3;
+    }
+
+    .gold .card-divider {
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+
+    .card-desc {
+      font-family: var(--F2);
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: var(--txt3);
+      line-height: 1.65;
+    }
+
+    /* Footer de card */
+    .card-footer {
+      border-top: 1px solid var(--border2);
+      padding: 8px 18px;
+      background: rgba(0,5,3,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 5;
+    }
+
+    .card-footer-tag {
+      font-family: var(--F3);
+      font-size: 0.55rem;
+      color: var(--txt3);
+      letter-spacing: 2px;
+    }
+
+    .card-footer-code {
+      font-family: var(--F3);
+      font-size: 0.55rem;
+      color: var(--g);
+      letter-spacing: 1px;
+      opacity: 0.6;
+    }
+
+    .gold .card-footer-code { color: var(--gold); }
+
+    /* ═══════════════════════════════════════
+       PAREJA JEFES — foto doble
+    ═══════════════════════════════════════ */
+    .jefe-card-doble .card-foto-wrap {
+      height: 200px;
+      gap: 0;
+    }
+
+    .jefe-card-doble .fotos-row {
+      display: flex;
+      gap: 30px;
+      z-index: 4;
+      position: relative;
+    }
+
+    .jefe-card-doble .card-foto-wrap img {
+      width: 100px;
+      height: 100px;
+    }
+
+    /* ═══════════════════════════════════════
+       COOPERADORES — 3 columnas panel
+    ═══════════════════════════════════════ */
+    .cooperadores-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    /* cards cooperadores más compactas */
+    .cp-card.compact .card-foto-wrap {
+      height: 160px;
+    }
+
+    .cp-card.compact .card-foto-wrap img {
+      width: 90px;
+      height: 90px;
+    }
+
+    /* ═══════════════════════════════════════
+       PANEL STAT LATERAL (inspirado en imagen)
+    ═══════════════════════════════════════ */
+    .stat-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .stat-label {
+      font-family: var(--F3);
+      font-size: 0.55rem;
+      color: var(--txt3);
+      letter-spacing: 2px;
+      min-width: 70px;
+    }
+
+    .stat-bar-track {
+      flex: 1;
+      height: 4px;
+      background: rgba(0,255,136,0.1);
+      border: 1px solid rgba(0,255,136,0.15);
+      position: relative;
+      clip-path: polygon(3px 0, 100% 0, calc(100% - 3px) 100%, 0 100%);
+    }
+
+    .stat-bar-fill {
+      height: 100%;
+      background: var(--g);
+      box-shadow: 0 0 6px var(--g);
+      transition: width 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .gold .stat-bar-fill { background: var(--gold); box-shadow: 0 0 6px var(--gold); }
+    .gold .stat-bar-track { background: rgba(255,228,77,0.1); border-color: rgba(255,228,77,0.2); }
+
+    .stat-val {
+      font-family: var(--F3);
+      font-size: 0.55rem;
+      color: var(--g);
+      min-width: 28px;
+      text-align: right;
+    }
+
+    .gold .stat-val { color: var(--gold); }
+
+    /* ═══════════════════════════════════════
+       BOTÓN VOLVER
+    ═══════════════════════════════════════ */
+    .volver-wrap {
+      text-align: center;
+      margin: 50px 0 30px;
+      position: relative;
       z-index: 10;
     }
 
-    /* Contenedor de cooperadores */
-    .cooperadores {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 40px;
-      margin: 40px 0;
-    }
-
-    /* Diseñador general */
-    .diseñador-centro {
-      display: flex;
-      justify-content: center;
-      margin: 50px 0;
-    }
-
     a.volver {
-      display: inline-block;
-      margin-top: 40px;
-      color: #00d4aa;
-      border: 2px solid #00d4aa;
-      padding: 12px 25px;
+      font-family: var(--F1);
+      font-size: 0.7rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
       text-decoration: none;
-      border-radius: 8px;
-      font-size: 1.1em;
-      transition: all 0.3s ease;
+      color: var(--g);
+      padding: 16px 50px;
+      border: 1px solid var(--g);
+      background: rgba(0,255,136,0.03);
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+      clip-path: polygon(14px 0%, 100% 0%, calc(100% - 14px) 100%, 0% 100%);
+      transition: all 0.25s ease;
+      animation: btnIdle 6s infinite;
     }
+
+    a.volver::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -70%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0,255,136,0.2), transparent);
+      transform: skewX(-20deg);
+      transition: left 0.45s ease;
+    }
+
+    a.volver:hover::before { left: 130%; }
 
     a.volver:hover {
-      background: #00d4aa;
-      color: #000;
-      box-shadow: 0 0 20px #00d4aa;
+      color: var(--cy);
+      border-color: var(--cy);
+      box-shadow: 0 0 30px var(--cy-glow), 0 0 60px rgba(0,255,136,0.1);
+      animation: btnGlitch 0.4s steps(1) infinite;
     }
 
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.5em;
-      }
-      
-      .foto-autor {
-        width: 100px;
-        height: 100px;
-      }
-
-      .fotos-pareja .foto-autor {
-        width: 100px;
-        height: 100px;
-      }
-
-      .king-crimson {
-        right: -120px;
-        width: 100px;
-      }
+    @keyframes btnIdle {
+      0%,90%,100% { text-shadow: 0 0 8px var(--g-glow); }
+      91% { text-shadow: -2px 0 var(--cy), 2px 0 #ff0055; transform: translate(-1px,0); }
+      92% { text-shadow: 2px 0 var(--cy), -2px 0 #ff0055; transform: translate(2px,0); clip-path: polygon(14px 0%, 100% 0%, calc(100% - 14px) 52%, 0% 52%); }
+      93% { clip-path: polygon(14px 0%, 100% 0%, calc(100% - 14px) 100%, 0% 100%); transform: translate(0); }
     }
 
-    @media (max-width: 480px) {
-      .king-crimson {
-        display: none;
-      }
+    @keyframes btnGlitch {
+      0%  { text-shadow: -2px 0 var(--cy), 2px 0 #ff0055; transform: translate(-1px,0); }
+      25% { text-shadow: 3px 0 #ff0055, -3px 0 var(--cy); transform: translate(2px,-1px); }
+      50% { text-shadow: 0 0 16px var(--cy); transform: translate(0,1px); clip-path: polygon(14px 0%, 100% 0%, calc(100% - 14px) 55%, 0% 55%); }
+      75% { text-shadow: 2px 0 #ff0055; transform: translate(-2px,0); clip-path: polygon(14px 45%, 100% 45%, calc(100% - 14px) 100%, 0% 100%); }
+      100% { clip-path: polygon(14px 0%, 100% 0%, calc(100% - 14px) 100%, 0% 100%); }
     }
 
-  /* ============================================
-   RESPONSIVE DESIGN - Optimizado para móviles
-   ============================================ */
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .jefes-grid        { grid-template-columns: 1fr; }
+      .cooperadores-grid { grid-template-columns: 1fr; }
+    }
 
-/* Box-sizing global */
-* {
-  box-sizing: border-box;
-}
-
-body {
-  overflow-x: hidden;
-}
-
-/* Tamaños de texto adaptables - balanceados */
-h1 {
-  font-size: clamp(2.2em, 6vw, 3.5em);
-  padding: 0 15px;
-  margin-top: clamp(25px, 5vh, 40px);
-}
-
-.autor {
-  font-size: clamp(1rem, 3vw, 1.1em);
-}
-
-p.descripcion {
-  font-size: clamp(0.95rem, 2.2vw, 1rem);
-  line-height: 1.6;
-  padding: 0 15px;
-}
-
-.pdf-section h2 {
-  font-size: clamp(1.4em, 4.5vw, 1.8em);
-}
-
-.pdf-btn {
-  font-size: clamp(0.9rem, 2.5vw, 1rem);
-  padding: clamp(10px, 2vw, 12px) clamp(20px, 4vw, 25px);
-}
-
-.page-number {
-  font-size: clamp(0.8rem, 2.2vw, 0.9rem);
-  padding: clamp(6px, 1.5vw, 8px) clamp(10px, 2vw, 12px);
-}
-
-.modal-page-info {
-  font-size: clamp(0.95rem, 2.8vw, 1.1rem);
-}
-
-.modal-btn {
-  font-size: clamp(0.9rem, 2.3vw, 1rem);
-  padding: clamp(10px, 2vw, 12px) clamp(18px, 3.5vw, 25px);
-}
-
-.close-magazine-modal {
-  font-size: clamp(2rem, 5.5vw, 2.5rem);
-  width: clamp(45px, 11vw, 50px);
-  height: clamp(45px, 11vw, 50px);
-  top: clamp(10px, 2vh, 15px);
-  right: clamp(15px, 3vw, 25px);
-}
-
-a.volver {
-  font-size: clamp(0.95rem, 2.3vw, 1rem);
-  padding: clamp(10px, 2vw, 12px) clamp(18px, 3.5vw, 20px);
-}
-
-/* Mejoras para el scroll */
-.magazine-pages {
-  -webkit-overflow-scrolling: touch;
-  padding: 15px 10px;
-}
-
-.magazine-page {
-  min-width: 220px;
-}
-
-img.principal {
-  width: 100%;
-  max-width: 600px;
-  display: block;
-  margin: 20px auto;
-}
-
-/* TABLETS (768px o menos) */
-@media (max-width: 768px) {
-  .contenedor {
-    margin: 20px 15px;
-    padding: 20px 15px;
-  }
-
-  .magazine-pages {
-    gap: 12px;
-    padding: 12px 8px;
-  }
-
-  .magazine-page {
-    flex: 0 0 calc(90% - 10px);
-    min-width: 280px;
-    max-width: 400px;
-  }
-
-  .pdf-section {
-    padding: 20px 15px;
-    margin-top: 35px;
-  }
-
-  .pdf-container {
-    padding: 18px 15px;
-  }
-
-  .pdf-controls {
-    padding: 0 10px;
-    gap: 12px;
-  }
-
-  .pdf-btn {
-    width: 100%;
-    max-width: 400px;
-    justify-content: center;
-  }
-
-  .magazine-modal-content {
-    width: 96%;
-    height: 92vh;
-    border-width: 3px;
-  }
-
-  .magazine-modal-page {
-    padding: 12px;
-  }
-
-  .magazine-modal-footer {
-    flex-direction: column;
-    padding: 15px;
-    gap: 12px;
-  }
-
-  .modal-page-controls {
-    width: 100%;
-    justify-content: center;
-    gap: 12px;
-  }
-
-  .modal-btn {
-    flex: 1;
-    min-width: 130px;
-  }
-}
-
-/* MÓVILES PEQUEÑOS (480px o menos) */
-@media (max-width: 480px) {
-  .contenedor {
-    margin: 15px 10px;
-    padding: 18px 12px;
-  }
-
-  .magazine-page {
-    flex: 0 0 calc(95% - 8px);
-    min-width: 260px;
-  }
-
-  .modal-btn {
-    padding: 10px 16px;
-    min-width: 115px;
-  }
-
-  .pdf-section {
-    padding: 18px 12px;
-  }
-}
-
-/* MÓVILES MUY PEQUEÑOS (360px o menos) */
-@media (max-width: 360px) {
-  .magazine-page {
-    flex: 0 0 calc(98% - 5px);
-  }
-
-  .modal-page-controls {
-    flex-direction: column;
-  }
-
-  .modal-btn {
-    width: 100%;
-  }
-}
+    @media (max-width: 600px) {
+      .window-title-txt { font-size: 1rem; letter-spacing: 4px; }
+      .hud-status       { display: none; }
+      .main-grid        { padding: 0 14px 40px; }
+    }
   </style>
 </head>
 <body>
-  <h1>AUTORES</h1>
 
-  <div class="contenedor-principal">
+<!-- CANVAS MATRIX BG -->
+<canvas id="matrixBg"></canvas>
 
-    <!-- Bloque de pareja -->
-    <div class="autor-card jefe autor-pareja">
-      <div class="fotos-pareja">
-        <img src="57ec4d95-6d5b-4630-a4a6-a1abc7df2a13.jpeg" alt="Jefe Programador" class="foto-autor">
-        <img src="8621fbca-07d2-40b8-936d-49b3dc64faed.jpeg" alt="Jefa de Diseño" class="foto-autor">
+<!-- ══ HUD TOP BAR ══ -->
+<header class="hud-top">
+  <div class="hud-logo">
+    <img src="img/Escudo ALLC HD PNG.png" alt="Escudo">
+    ILUSTRARTE
+  </div>
+  <div class="hud-status">
+    <span><span class="dot-live"></span> SISTEMA ACTIVO</span>
+    <span>MÓDULO: AUTH_TEAM</span>
+    <span id="clock">00:00:00</span>
+  </div>
+  <nav class="hud-nav">
+    <a href="index.html">← INICIO</a>
+    <a href="editorial.html">EDITORIAL</a>
+  </nav>
+</header>
+
+<!-- ══ PAGE TITLE WINDOW ══ -->
+<div class="page-header">
+  <div class="window-bar">
+    <span class="window-title-txt">AUTORES</span>
+    <div class="window-controls">
+      <div class="win-dots">
+        <div class="win-dot"></div>
+        <div class="win-dot"></div>
+        <div class="win-dot"></div>
       </div>
-      <div class="cargo">JEFE PROGRAMADOR & JEFA DE DISEÑO Y PORTADAS</div>
-      <div class="nombre">Juan Camilo Herrera & Ashley Tatiana Tapias</div>
-      <div class="descripcion">
-        Él es líder del equipo de desarrollo Encargado de toda la revista digital, diseñador principal y programador clave, especialista en arquitectura web y encargado de la página.  
-        Ella es directora creativa encargada de hacer las portadas de cada articulo de la revista digital y diseño visual.  
+    </div>
+  </div>
+  <div class="window-content-bar">
+    <span class="sys-tag">### EQUIPO_ILUSTRARTE &gt;&gt; COLEGIO ALBERTO LLERAS CAMARGO &gt;&gt; 2025</span>
+    <div class="sys-bar"></div>
+    <span class="sys-tag">ID_5</span>
+  </div>
+</div>
+
+<!-- ══ MAIN GRID ══ -->
+<main class="main-grid">
+
+  <!-- SECCIÓN JEFES -->
+  <div class="section-label">JEFE_PROGRAMADOR & JEFA_DISEÑO // NIVEL_ALPHA</div>
+
+  <div class="jefes-grid">
+
+    <!-- Card 1: Juan Camilo -->
+    <div class="cp-card gold" style="animation-delay:0.1s">
+      <div class="card-header">
+        <span class="card-header-tag">.GAME &nbsp; ##</span>
+        <div class="card-header-bars">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <div class="card-foto-wrap">
+        <img src="57ec4d95-6d5b-4630-a4a6-a1abc7df2a13.jpeg" alt="Juan Camilo Herrera">
+        <span class="img-label">ID: ASMAEL </span>
+        <span class="img-label-r gold">● REC</span>
+      </div>
+      <div class="card-body">
+        <div class="card-cargo gold-txt">JEFE PROGRAMADOR</div>
+        <div class="card-nombre">Juan Camilo Herrera</div>
+        <div class="card-divider"></div>
+        <div class="card-desc">
+          Líder del equipo de desarrollo. Encargado de toda la arquitectura web, programación principal y despliegue de la revista digital. Diseñador y programador clave de la plataforma.
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">CÓDIGO</span>
+          <div class="stat-bar-track"><div class="stat-bar-fill" style="width:95%"></div></div>
+          <span class="stat-val">95</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">DISEÑO</span>
+          <div class="stat-bar-track"><div class="stat-bar-fill" style="width:85%"></div></div>
+          <span class="stat-val">85</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">LIDERAZGO</span>
+          <div class="stat-bar-track"><div class="stat-bar-fill" style="width:90%"></div></div>
+          <span class="stat-val">90</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="card-footer-tag">CYBER####.####</span>
+        <span class="card-footer-code">0xFF3A</span>
       </div>
     </div>
 
-    <!-- Cooperadores centrados -->
-    <div class="cooperadores">
-      <div class="autor-card">
-        <img src="4f189ebf-c544-4d50-9af5-4bc1439b2187.jpeg" alt="Cooperador 1" class="foto-autor">
-        <div class="cargo">JEFE DE ARTICULOS</div>
-        <div class="nombre">Santiago Cuellar Diaz</div>
-        <div class="descripcion">
-          Especialista en contenido digital y gestión de medios audiovisuales. Responsable de la integración de articulos pdf del proyecto, lider encargado de cada articulo.
+    <!-- Card 2: Ashley -->
+    <div class="cp-card gold">
+      <div class="card-header">
+        <span class="card-header-tag">.GAME &nbsp; ##</span>
+        <div class="card-header-bars">
+          <span></span><span></span><span></span><span></span><span></span>
         </div>
       </div>
-
-      <div class="autor-card">
-        <img src="24f7cbb8-e139-4ee1-a38c-5e321abdc65a.jpeg" alt="Cooperador 2" class="foto-autor">
-        <div class="cargo">COOPERADOR DE PÁGINA</div>
-        <div class="nombre">Kevin Alexander Moreno Benito</div>
-        <div class="descripcion">
-          Especialista en contenido digital y gestión de medios audiovisuales. Responsable de la integración de articulos pdf del proyecto.
+      <div class="card-foto-wrap">
+        <img src="8621fbca-07d2-40b8-936d-49b3dc64faed.jpeg" alt="Ashley Tatiana Tapias">
+        <span class="img-label">ID: SHIMMER</span>
+        <span class="img-label-r gold">● REC</span>
+      </div>
+      <div class="card-body">
+        <div class="card-cargo gold-txt">JEFA DE DISEÑO</div>
+        <div class="card-nombre">Ashley Tatiana Tapias</div>
+        <div class="card-divider"></div>
+        <div class="card-desc">
+          Directora creativa y visual. Encargada de las portadas de cada artículo de la revista digital y de la identidad estética del proyecto.
         </div>
+        <div class="stat-row">
+          <span class="stat-label">DISEÑO</span>
+          <div class="stat-bar-track"><div class="stat-bar-fill" style="width:97%"></div></div>
+          <span class="stat-val">97</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">ILUSTRACIÓN</span>
+          <div class="stat-bar-track"><div class="stat-bar-fill" style="width:92%"></div></div>
+          <span class="stat-val">92</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">CREATIVIDAD</span>
+          <div class="stat-bar-track"><div class="stat-bar-fill" style="width:99%"></div></div>
+          <span class="stat-val">99</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="card-footer-tag">CYBER####.####</span>
+        <span class="card-footer-code">0xFF4B</span>
       </div>
     </div>
-      <audio id="kingCrimsonSound" preload="auto" src="skippy-install-update.mp3"></audio>
 
-    <!-- Diseñador general centrado -->
-    <div class="diseñador-centro">
-      <div class="autor-card">
-        <img src="4ad97834-feac-4225-b179-b0c42ac7dc94.jpeg" alt="Diseñador Básico" class="foto-autor">
-        <div class="cargo">COOPERADOR BASICO</div>
-        <div class="nombre">Melo Cespedes Deivid Sebastian</div>
-        <div class="descripcion">
-          Responsable de la integración de articulos pdf del proyecto, si hizo los pdf pero al jefe de programacion le toco arreglarlo.
+  </div><!-- /jefes-grid -->
+
+  <!-- SECCIÓN COOPERADORES -->
+  <div class="section-label">COOPERADORES_PÁGINA // NIVEL_BETA</div>
+
+  <div class="cooperadores-grid">
+
+    <!-- Santiago -->
+    <div class="cp-card compact">
+      <div class="card-header">
+        <span class="card-header-tag">EXT.LINK ##</span>
+        <div class="card-header-bars">
+          <span></span><span></span><span></span><span></span><span></span>
         </div>
       </div>
+      <div class="card-foto-wrap">
+        <img src="4f189ebf-c544-4d50-9af5-4bc1439b2187.jpeg" alt="Santiago Cuellar">
+        <span class="img-label">ID: DAMIAN</span>
+        <span class="img-label-r verde">◈ ONLINE</span>
+      </div>
+      <div class="card-body">
+        <div class="card-cargo">COOPERADOR DE PÁGINA</div>
+        <div class="card-nombre">Santiago Cuellar Díaz</div>
+        <div class="card-divider"></div>
+        <div class="card-desc">
+          Especialista en contenido digital y gestión de medios audiovisuales. Líder encargado de la integración de artículos PDF del proyecto.
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">CONTENIDO</span>
+          <div class="stat-bar-track"><div class="stat-bar-fill" style="width:82%"></div></div>
+          <span class="stat-val">82</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">GESTIÓN</span>
+          <div class="stat-bar-track"><div class="stat-bar-fill" style="width:78%"></div></div>
+          <span class="stat-val">78</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="card-footer-tag">PLATFORM</span>
+        <span class="card-footer-code">0xC1</span>
+      </div>
     </div>
-    <style>
+
+    <!-- Kevin -->
+    <div class="cp-card compact">
+      <div class="card-header">
+        <span class="card-header-tag">EXT.LINK ##</span>
+        <div class="card-header-bars">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <div class="card-foto-wrap">
+        <img src="24f7cbb8-e139-4ee1-a38c-5e321abdc65a.jpeg" alt="Kevin Moreno">
+        <span class="img-label">ID: NASHE </span>
+        <span class="img-label-r verde">◈ ONLINE</span>
+      </div>
+      <div class="card-body">
+        <div class="card-cargo">COOPERADOR DE PÁGINA</div>
+        <div class="card-nombre">Kevin Alexander Moreno Benito</div>
+        <div class="card-divider"></div>
+        <div class="card-desc">
+          Especialista en contenido digital y gestión de medios audiovisuales. Responsable de la integración de artículos PDF del proyecto.
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">CONTENIDO</span>
+          <div class="stat-bar-track"><div class="stat-bar-fill" style="width:80%"></div></div>
+          <span class="stat-val">80</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">MEDIOS AV</span>
+          <div class="stat-bar-track"><div class="stat-bar-fill" style="width:75%"></div></div>
+          <span class="stat-val">75</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="card-footer-tag">PLATFORM</span>
+        <span class="card-footer-code">0xC2</span>
+      </div>
+    </div>
+
+    <!-- Deivid -->
+    <div class="cp-card compact">
+      <div class="card-header">
+        <span class="card-header-tag">EXT.LINK ##</span>
+        <div class="card-header-bars">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <div class="card-foto-wrap">
+        <img src="4ad97834-feac-4225-b179-b0c42ac7dc94.jpeg" alt="Deivid Melo">
+        <span class="img-label">ID: SCORPIO</span>
+        <span class="img-label-r verde">◈ ONLINE</span>
+      </div>
+      <div class="card-body">
+        <div class="card-cargo">DISEÑADOR BÁSICO</div>
+        <div class="card-nombre">Melo Céspedes Deivid Sebastián</div>
+        <div class="card-divider"></div>
+        <div class="card-desc">
+          Encargado de la elaboración de los PDFs del proyecto. Hizo lo mejor que pudo — el jefe de programación ajustó los detalles finales.
+        </div>
+        <audio id="kingCrimsonSound" preload="auto" src="skippy-install-update.mp3"></audio>
+
+        <div class="stat-row">
+          <span class="stat-label">PDF</span>
+          <div class="stat-bar-track"><div class="stat-bar-fill" style="width:65%"></div></div>
+          <span class="stat-val">65</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">ESFUERZO</span>
+          <div class="stat-bar-track"><div class="stat-bar-fill" style="width:100%"></div></div>
+          <span class="stat-val">100</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="card-footer-tag">PLATFORM</span>
+        <span class="card-footer-code">0xC3</span>
+      </div>
+    </div>
+
+  </div><!-- /cooperadores-grid -->
+
+</main>
+
+<!-- BOTÓN VOLVER -->
+<div class="volver-wrap">
+  <a class="volver" href="index.html">← VOLVER AL INICIO</a>
+</div>
+
+<script>
+/* ── RELOJ HUD ── */
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock').textContent =
+    now.toTimeString().slice(0,8);
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+/* ── CURSOR CYBERPUNK ── */
+(function () {
+  const style = document.createElement('style');
+  style.textContent = `
+    body { cursor: none !important; }
+    .cyber-cursor { position:fixed; pointer-events:none; z-index:999999; top:0;left:0; transform:translate(-50%,-50%); transition: top 0.06s linear, left 0.06s linear; }
+    .cyber-cursor-outer { width:26px;height:26px;border:1.5px solid #00ff88;border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);box-shadow:0 0 10px #00ff88,0 0 20px rgba(0,255,136,0.3);animation:cring 2s ease-in-out infinite;transition:width .15s,height .15s,border-color .15s; }
+    .cyber-cursor-dot { width:4px;height:4px;background:#00ff88;border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);box-shadow:0 0 8px #00ff88; }
+    .cross-h,.cross-v { position:absolute;background:#00ff88;opacity:0.45;top:50%;left:50%; }
+    .cross-h { width:14px;height:1px;transform:translate(-50%,-50%); }
+    .cross-v { width:1px;height:14px;transform:translate(-50%,-50%); }
+    body.chover .cyber-cursor-outer { width:38px;height:38px;border-color:#00f7ff;box-shadow:0 0 20px #00f7ff,0 0 40px rgba(0,247,255,0.25); }
+    @keyframes cring { 0%,100%{box-shadow:0 0 8px #00ff88,0 0 16px rgba(0,255,136,0.3)} 50%{box-shadow:0 0 18px #00ff88,0 0 36px rgba(0,255,136,0.5)} }
+  `;
+  document.head.appendChild(style);
+
+  const cur = document.createElement('div');
+  cur.className = 'cyber-cursor';
+  cur.innerHTML = `<div class="cyber-cursor-outer"></div><div class="cyber-cursor-dot"></div><div class="cross-h"></div><div class="cross-v"></div>`;
+  document.body.appendChild(cur);
+
+  let mx = -200, my = -200, px = -200, py = -200;
+  function tick() {
+    px += (mx - px) * 0.2;
+    py += (my - py) * 0.2;
+    cur.style.left = px + 'px';
+    cur.style.top  = py + 'px';
+    requestAnimationFrame(tick);
+  }
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  document.querySelectorAll('a,button,.cp-card').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('chover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('chover'));
+  });
+  document.addEventListener('mousedown', () => cur.querySelector('.cyber-cursor-outer').style.transform='translate(-50%,-50%) scale(0.65)');
+  document.addEventListener('mouseup',   () => cur.querySelector('.cyber-cursor-outer').style.transform='translate(-50%,-50%) scale(1)');
+  tick();
+})();
+
+/* ── MATRIX BG ── */
+(function(){
+  const canvas = document.getElementById('matrixBg');
+  const ctx = canvas.getContext('2d');
+  const CHARS = '01 10 00 11 0F 3A B7 DF 4C 01 10 ア イ ウ エ カ キ 01 00'.split(' ');
+  const SIDE = 80, FS = 12, CW = 15;
+  let W, H, cols = [];
+
+  function resize(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    cols = [];
+    const n = Math.floor(SIDE / CW);
+    for(let i=0;i<n;i++) cols.push(mk(i*CW+3));
+    for(let i=0;i<n;i++) cols.push(mk(W - SIDE + i*CW + 3));
+  }
+
+  function mk(x){ return { x, y: Math.random()*-H, speed: 1+Math.random()*3, len: 6+Math.floor(Math.random()*18), chars:[], t:0, cr:3+Math.floor(Math.random()*10), cy: Math.random()>.85 }; }
+
+  function loop(){
+    ctx.fillStyle='rgba(0,0,0,0.11)';
+    ctx.fillRect(0,0,SIDE,H);
+    ctx.fillRect(W-SIDE,0,SIDE,H);
+    cols.forEach(c=>{
+      c.t++;
+      c.y += c.speed;
+      if(c.y - c.len*FS > H){ c.y=Math.random()*-H; c.speed=1+Math.random()*3; c.len=6+Math.floor(Math.random()*18); c.cy=Math.random()>.85; c.chars=[]; }
+      if(c.t%c.cr===0) c.chars = Array.from({length:c.len},()=>CHARS[Math.floor(Math.random()*CHARS.length)]);
+      c.chars.forEach((ch,k)=>{
+        const cy = c.y - k*FS;
+        if(cy<0||cy>H) return;
+        const t = k/c.len;
+        ctx.globalAlpha = k===0?1 : k<3 ? 0.85 : Math.max(0,0.7-t*0.8);
+        ctx.fillStyle   = k===0 ? '#e0ffe8' : c.cy ? '#00f7ff' : k<3 ? '#00ff88' : '#00aa55';
+        ctx.shadowColor = k<2 ? (c.cy?'#00f7ff':'#00ff88') : 'transparent';
+        ctx.shadowBlur  = k<2 ? 14 : 0;
+        ctx.font = `bold ${FS}px 'Share Tech Mono', monospace`;
+        ctx.fillText(ch, c.x, cy);
+      });
+      ctx.globalAlpha=1; ctx.shadowBlur=0;
+    });
+    requestAnimationFrame(loop);
+  }
+
+  window.addEventListener('resize', resize);
+  resize(); loop();
+})();
+</script>
+<style>
   /* Fondo rojo tipo King Crimson */
   #crimsonOverlay {
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: rgba(0, 255, 128, 0.74);
     backdrop-filter: blur(3px);
     display: none;
@@ -558,18 +1093,39 @@ img.principal {
   }
 
   @keyframes glitch {
-    0% { opacity: 1; transform: translate(0,0); }
-    25% { opacity: 0.8; transform: translate(2px,-2px); }
-    50% { opacity: 1; transform: translate(-2px,2px); }
-    75% { opacity: 0.9; transform: translate(3px,0); }
-    100% { opacity: 1; transform: translate(0,0); }
+    0% {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+
+    25% {
+      opacity: 0.8;
+      transform: translate(2px, -2px);
+    }
+
+    50% {
+      opacity: 1;
+      transform: translate(-2px, 2px);
+    }
+
+    75% {
+      opacity: 0.9;
+      transform: translate(3px, 0);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
   }
 
   /* 🎬 Modal del video */
   #johnsonModal {
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.9);
     display: none;
     justify-content: center;
@@ -671,51 +1227,50 @@ img.principal {
 </script>
 
 <script>
-let tapCount = 0;
-let tapTimer;
+  let tapCount = 0;
+  let tapTimer;
 
-// Detecta 10 toques seguidos en cualquier parte del body
-document.body.addEventListener('touchstart', () => {
-  tapCount++;
-  clearTimeout(tapTimer);
+  // Detecta 10 toques seguidos en cualquier parte del body
+  document.body.addEventListener('touchstart', () => {
+    tapCount++;
+    clearTimeout(tapTimer);
 
-  if (tapCount === 10) {
-    activarEasterEgg();
-    tapCount = 0;
+    if (tapCount === 10) {
+      activarEasterEgg();
+      tapCount = 0;
+    }
+
+    // Reinicia el contador si pasa 1 segundo sin tocar
+    tapTimer = setTimeout(() => {
+      tapCount = 0;
+    }, 1000);
+  });
+
+  function activarEasterEgg() {
+    // Mostrar efecto rojo
+    const overlay = document.getElementById('crimsonOverlay');
+    overlay.style.display = 'flex';
+
+    // Sonido King Crimson (asegura interacción antes del video)
+    const sound = document.getElementById('kingCrimsonSound');
+    sound.currentTime = 0;
+    sound.play().catch(() => { });
+
+    // Luego de 3 segundos, muestra el video
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      const modal = document.getElementById('johnsonModal');
+      const video = document.getElementById('johnsonVideo');
+      modal.style.display = 'flex';
+      video.currentTime = 0;
+      video.play().catch(() => {
+        // Si no puede reproducir automáticamente, muestra botón
+        alert("Toca 'Play' para ver el video secreto 🔒");
+      });
+    }, 3000);
   }
-
-  // Reinicia el contador si pasa 1 segundo sin tocar
-  tapTimer = setTimeout(() => {
-    tapCount = 0;
-  }, 1000);
-});
-
-function activarEasterEgg() {
-  // Mostrar efecto rojo
-  const overlay = document.getElementById('crimsonOverlay');
-  overlay.style.display = 'flex';
-
-  // Sonido King Crimson (asegura interacción antes del video)
-  const sound = document.getElementById('kingCrimsonSound');
-  sound.currentTime = 0;
-  sound.play().catch(() => {});
-
-  // Luego de 3 segundos, muestra el video
-  setTimeout(() => {
-    overlay.style.display = 'none';
-    const modal = document.getElementById('johnsonModal');
-    const video = document.getElementById('johnsonVideo');
-    modal.style.display = 'flex';
-    video.currentTime = 0;
-    video.play().catch(() => {
-      // Si no puede reproducir automáticamente, muestra botón
-      alert("Toca 'Play' para ver el video secreto 🔒");
-    });
-  }, 3000);
-}
 </script>
 
-    <a class="volver" href="index.html">← Volver a la página principal</a>
-  </div>
+<a class="volver" href="index.html">← Volver a la página principal</a>
 </body>
 </html>
